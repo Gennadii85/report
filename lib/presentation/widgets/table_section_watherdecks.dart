@@ -4,7 +4,7 @@ import '../../core/have_variables.dart';
 import '../pages/add_new_table_row.dart';
 import '../widgets/table_row_ui.dart';
 
-class TableSectionWatherdecks extends StatelessWidget {
+class TableSectionWatherdecks extends StatefulWidget {
   const TableSectionWatherdecks({
     super.key,
     required this.maps,
@@ -18,14 +18,16 @@ class TableSectionWatherdecks extends StatelessWidget {
   final List dataList;
 
   @override
+  State<TableSectionWatherdecks> createState() =>
+      _TableSectionWatherdecksState();
+}
+
+class _TableSectionWatherdecksState extends State<TableSectionWatherdecks> {
+  @override
   Widget build(BuildContext context) {
-    // return
-    //  BlocBuilder<AddNewTableRowCubit, AddNewTableRowState>(
-    // builder: (context, state) {
-    // Map maps = maps;
     List nameList = [];
     List valueList = [];
-    maps.forEach((key, value) {
+    widget.maps.forEach((key, value) {
       nameList.add(key);
       valueList.add(value);
     });
@@ -34,19 +36,16 @@ class TableSectionWatherdecks extends StatelessWidget {
       children: [
         ListView.builder(
           shrinkWrap: true,
-          itemCount: maps.length,
+          itemCount: widget.maps.length,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: ((context, index) {
             return TableRowUI(
               name: nameList[index],
               value: valueList[index],
               delete: (name) {
-                maps.remove(name);
-                Hive.box(boxName).put(VarHave.table, maps);
-                // BlocProvider.of<AddNewTableRowCubit>(
-                //   context,
-                // ).resetState();
-                // setState(() {});
+                widget.maps.remove(name);
+                Hive.box(widget.boxName).put(VarHave.table, widget.maps);
+                setState(() {});
               },
             );
           }),
@@ -56,9 +55,9 @@ class TableSectionWatherdecks extends StatelessWidget {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => AddNewTableRow(
-                  boxName: boxName,
-                  dataList: dataList,
-                  route: route,
+                  boxName: widget.boxName,
+                  dataList: widget.dataList,
+                  route: widget.route,
                 ),
               ),
             );

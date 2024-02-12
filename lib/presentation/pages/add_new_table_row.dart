@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pdf_invoice_generator_flutter/presentation/widgets/drawer_navigation.dart';
 
 import '../../core/have_variables.dart';
+import '../cubit/add_new_table/add_new_table_cubit.dart';
 
 class AddNewTableRow extends StatelessWidget {
   AddNewTableRow({
@@ -57,7 +58,7 @@ class AddNewTableRow extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 50),
-            BlocBuilder<AddNewTableRowCubit, AddNewTableRowState>(
+            BlocBuilder<AddNewTableCubit, AddNewTableState>(
               builder: (context, state) {
                 return Column(
                   children: [
@@ -75,7 +76,7 @@ class AddNewTableRow extends StatelessWidget {
                             Column(
                               children: [
                                 DropdownButton2<String>(
-                                  value: state.name ?? tableNameList.first,
+                                  // value: state.name ?? tableNameList.first,
                                   hint: const Text('Выберите название строки!'),
                                   isExpanded: true,
                                   items: tableNameList
@@ -93,7 +94,7 @@ class AddNewTableRow extends StatelessWidget {
                                       )
                                       .toList(),
                                   onChanged: (value) {
-                                    BlocProvider.of<AddNewTableRowCubit>(
+                                    BlocProvider.of<AddNewTableCubit>(
                                       context,
                                     ).updateList(value!, dataList);
                                   },
@@ -125,7 +126,7 @@ class AddNewTableRow extends StatelessWidget {
                                       )
                                       .toList(),
                                   onChanged: (value) {
-                                    BlocProvider.of<AddNewTableRowCubit>(
+                                    BlocProvider.of<AddNewTableCubit>(
                                       context,
                                     ).updateValue(value);
                                   },
@@ -157,7 +158,7 @@ class AddNewTableRow extends StatelessWidget {
                                               ),
                                               onPressed: () {
                                                 BlocProvider.of<
-                                                    AddNewTableRowCubit>(
+                                                    AddNewTableCubit>(
                                                   context,
                                                 ).updateEditValue(
                                                   controller.text,
@@ -205,7 +206,7 @@ class AddNewTableRow extends StatelessWidget {
                                 state.name!,
                                 state.editValue ?? state.value,
                               );
-                              BlocProvider.of<AddNewTableRowCubit>(context)
+                              BlocProvider.of<AddNewTableCubit>(context)
                                   .resetState();
                               goRoute(route, context);
                             } else {
@@ -231,7 +232,7 @@ class AddNewTableRow extends StatelessWidget {
                             backgroundColor: Colors.blue.shade50,
                           ),
                           onPressed: () {
-                            BlocProvider.of<AddNewTableRowCubit>(context)
+                            BlocProvider.of<AddNewTableCubit>(context)
                                 .resetState();
                             Navigator.of(context).pop();
                           },
@@ -250,73 +251,73 @@ class AddNewTableRow extends StatelessWidget {
   }
 }
 
-class AddNewTableRowCubit extends Cubit<AddNewTableRowState> {
-  AddNewTableRowCubit()
-      : super(
-          AddNewTableRowState(
-            valueList: [],
-            value: '',
-          ),
-        );
+// class AddNewTableRowCubit extends Cubit<AddNewTableRowState> {
+//   AddNewTableRowCubit()
+//       : super(
+//           AddNewTableRowState(
+//             valueList: [],
+//             value: '',
+//           ),
+//         );
 
-  void updateList(String name, List nameList) {
-    List<String> valueList = [];
-    for (var element in nameList) {
-      if (element[0] == name) {
-        valueList = element[1];
-      }
-    }
-    emit(
-      AddNewTableRowState(
-        valueList: valueList,
-        value: valueList.first,
-        name: name,
-      ),
-    );
-  }
+//   void updateList(String name, List nameList) {
+//     List<String> valueList = [];
+//     for (var element in nameList) {
+//       if (element[0] == name) {
+//         valueList = element[1];
+//       }
+//     }
+//     emit(
+//       AddNewTableRowState(
+//         valueList: valueList,
+//         value: valueList.first,
+//         name: name,
+//       ),
+//     );
+//   }
 
-  void updateValue(value) {
-    emit(
-      AddNewTableRowState(
-        valueList: state.valueList,
-        value: value,
-        name: state.name,
-      ),
-    );
-  }
+//   void updateValue(value) {
+//     emit(
+//       AddNewTableRowState(
+//         valueList: state.valueList,
+//         value: value,
+//         name: state.name,
+//       ),
+//     );
+//   }
 
-  void updateEditValue(value) {
-    emit(
-      AddNewTableRowState(
-        valueList: state.valueList,
-        value: state.value,
-        name: state.name,
-        editValue: value,
-      ),
-    );
-  }
+//   void updateEditValue(value) {
+//     emit(
+//       AddNewTableRowState(
+//         valueList: state.valueList,
+//         value: state.value,
+//         name: state.name,
+//         editValue: value,
+//       ),
+//     );
+//   }
 
-  void resetState() {
-    emit(
-      AddNewTableRowState(
-        valueList: [],
-        value: '',
-        name: null,
-        editValue: null,
-      ),
-    );
-  }
-}
+//   void resetState() {
+//     emit(
+//       AddNewTableRowState(
+//         valueList: [],
+//         value: '',
+//         name: null,
+//         editValue: null,
+//       ),
+//     );
+//   }
+// }
 
-class AddNewTableRowState {
-  AddNewTableRowState({
-    required this.valueList,
-    required this.value,
-    this.name,
-    this.editValue,
-  });
-  String? name;
-  String? editValue;
-  List<String> valueList = [];
-  String value = '';
-}
+// class AddNewTableRowState {
+//   AddNewTableRowState({
+//     required this.valueList,
+//     required this.value,
+//     this.name,
+//     this.editValue,
+//   });
+//   String? name;
+//   String? editValue;
+//   List<String> valueList = [];
+//   String value = '';
+// }
