@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pdf_invoice_generator_flutter/presentation/widgets/drawer_navigation.dart';
 
 import '../../core/have_variables.dart';
-import '../cubit/add_new_table/add_new_table_cubit.dart';
+import '../cubit/add_new_table_row/add_new_table_row_cubit.dart';
 
 class AddNewTableRow extends StatelessWidget {
   AddNewTableRow({
@@ -37,7 +37,6 @@ class AddNewTableRow extends StatelessWidget {
     for (var element in dataList) {
       tableNameList.add(element[0]);
     }
-    print(tableNameList);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -58,7 +57,7 @@ class AddNewTableRow extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 50),
-            BlocBuilder<AddNewTableCubit, AddNewTableState>(
+            BlocBuilder<AddNewTableRowCubit, AddNewTableRowState>(
               builder: (context, state) {
                 return Column(
                   children: [
@@ -76,7 +75,6 @@ class AddNewTableRow extends StatelessWidget {
                             Column(
                               children: [
                                 DropdownButton2<String>(
-                                  // value: state.name ?? tableNameList.first,
                                   hint: const Text('Выберите название строки!'),
                                   isExpanded: true,
                                   items: tableNameList
@@ -94,7 +92,7 @@ class AddNewTableRow extends StatelessWidget {
                                       )
                                       .toList(),
                                   onChanged: (value) {
-                                    BlocProvider.of<AddNewTableCubit>(
+                                    BlocProvider.of<AddNewTableRowCubit>(
                                       context,
                                     ).updateList(value!, dataList);
                                   },
@@ -126,7 +124,7 @@ class AddNewTableRow extends StatelessWidget {
                                       )
                                       .toList(),
                                   onChanged: (value) {
-                                    BlocProvider.of<AddNewTableCubit>(
+                                    BlocProvider.of<AddNewTableRowCubit>(
                                       context,
                                     ).updateValue(value);
                                   },
@@ -134,53 +132,8 @@ class AddNewTableRow extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: InkWell(
-                                    onDoubleTap: () => showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        final TextEditingController controller =
-                                            TextEditingController(
-                                          text: state.value,
-                                        );
-                                        return AlertDialog(
-                                          content: SingleChildScrollView(
-                                            child: TextField(
-                                              controller: controller,
-                                              maxLines: 30,
-                                              onSubmitted: (value) =>
-                                                  controller.text = value,
-                                            ),
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              style: TextButton.styleFrom(
-                                                backgroundColor:
-                                                    Colors.blue.shade50,
-                                              ),
-                                              onPressed: () {
-                                                BlocProvider.of<
-                                                    AddNewTableCubit>(
-                                                  context,
-                                                ).updateEditValue(
-                                                  controller.text,
-                                                );
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('SAVE'),
-                                            ),
-                                            TextButton(
-                                              style: TextButton.styleFrom(
-                                                backgroundColor:
-                                                    Colors.blue.shade50,
-                                              ),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text('CANCEL'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ),
+                                    onDoubleTap: () =>
+                                        showRedactValue(context, state),
                                     child: Text(
                                       state.editValue ?? state.value,
                                     ),
@@ -206,7 +159,7 @@ class AddNewTableRow extends StatelessWidget {
                                 state.name!,
                                 state.editValue ?? state.value,
                               );
-                              BlocProvider.of<AddNewTableCubit>(context)
+                              BlocProvider.of<AddNewTableRowCubit>(context)
                                   .resetState();
                               goRoute(route, context);
                             } else {
@@ -232,7 +185,7 @@ class AddNewTableRow extends StatelessWidget {
                             backgroundColor: Colors.blue.shade50,
                           ),
                           onPressed: () {
-                            BlocProvider.of<AddNewTableCubit>(context)
+                            BlocProvider.of<AddNewTableRowCubit>(context)
                                 .resetState();
                             Navigator.of(context).pop();
                           },
@@ -249,75 +202,52 @@ class AddNewTableRow extends StatelessWidget {
       ),
     );
   }
+
+  Future<dynamic> showRedactValue(
+    BuildContext context,
+    AddNewTableRowState state,
+  ) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        final TextEditingController controller = TextEditingController(
+          text: state.value,
+        );
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: TextField(
+              controller: controller,
+              maxLines: 30,
+              onSubmitted: (value) => controller.text = value,
+            ),
+          ),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue.shade50,
+              ),
+              onPressed: () {
+                BlocProvider.of<AddNewTableRowCubit>(
+                  context,
+                ).updateEditValue(
+                  controller.text,
+                );
+                Navigator.of(context).pop();
+              },
+              child: const Text('SAVE'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue.shade50,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('CANCEL'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
-
-// class AddNewTableRowCubit extends Cubit<AddNewTableRowState> {
-//   AddNewTableRowCubit()
-//       : super(
-//           AddNewTableRowState(
-//             valueList: [],
-//             value: '',
-//           ),
-//         );
-
-//   void updateList(String name, List nameList) {
-//     List<String> valueList = [];
-//     for (var element in nameList) {
-//       if (element[0] == name) {
-//         valueList = element[1];
-//       }
-//     }
-//     emit(
-//       AddNewTableRowState(
-//         valueList: valueList,
-//         value: valueList.first,
-//         name: name,
-//       ),
-//     );
-//   }
-
-//   void updateValue(value) {
-//     emit(
-//       AddNewTableRowState(
-//         valueList: state.valueList,
-//         value: value,
-//         name: state.name,
-//       ),
-//     );
-//   }
-
-//   void updateEditValue(value) {
-//     emit(
-//       AddNewTableRowState(
-//         valueList: state.valueList,
-//         value: state.value,
-//         name: state.name,
-//         editValue: value,
-//       ),
-//     );
-//   }
-
-//   void resetState() {
-//     emit(
-//       AddNewTableRowState(
-//         valueList: [],
-//         value: '',
-//         name: null,
-//         editValue: null,
-//       ),
-//     );
-//   }
-// }
-
-// class AddNewTableRowState {
-//   AddNewTableRowState({
-//     required this.valueList,
-//     required this.value,
-//     this.name,
-//     this.editValue,
-//   });
-//   String? name;
-//   String? editValue;
-//   List<String> valueList = [];
-//   String value = '';
-// }

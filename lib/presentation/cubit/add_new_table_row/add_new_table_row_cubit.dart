@@ -1,9 +1,15 @@
 import 'package:bloc/bloc.dart';
 
-part 'add_new_table_state.dart';
+part 'add_new_table_row_state.dart';
 
-class AddNewTableCubit extends Cubit<AddNewTableState> {
-  AddNewTableCubit() : super(AddNewTableInitial());
+class AddNewTableRowCubit extends Cubit<AddNewTableRowState> {
+  AddNewTableRowCubit()
+      : super(
+          AddNewTableRowState(
+            valueList: [],
+            value: '',
+          ),
+        );
 
   void updateList(String name, List nameList) {
     List<String> valueList = [];
@@ -13,7 +19,7 @@ class AddNewTableCubit extends Cubit<AddNewTableState> {
       }
     }
     emit(
-      AddNewTableName(
+      AddNewTableRowState(
         valueList: valueList,
         value: valueList.first,
         name: name,
@@ -23,7 +29,7 @@ class AddNewTableCubit extends Cubit<AddNewTableState> {
 
   void updateValue(value) {
     emit(
-      AddNewTableName(
+      AddNewTableRowState(
         valueList: state.valueList,
         value: value,
         name: state.name,
@@ -33,7 +39,7 @@ class AddNewTableCubit extends Cubit<AddNewTableState> {
 
   void updateEditValue(value) {
     emit(
-      AddNewTableName(
+      AddNewTableRowState(
         valueList: state.valueList,
         value: state.value,
         name: state.name,
@@ -44,7 +50,7 @@ class AddNewTableCubit extends Cubit<AddNewTableState> {
 
   void resetState() {
     emit(
-      AddNewTableName(
+      AddNewTableRowState(
         valueList: [],
         value: '',
         name: null,
