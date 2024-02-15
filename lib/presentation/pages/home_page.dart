@@ -44,8 +44,10 @@ class _HomePageState extends State<HomePage> {
                     actions: [
                       TextButton(
                         onPressed: () {
-                          Hive.deleteFromDisk();
-                          setState(() {});
+                          setState(() {
+                            Hive.deleteFromDisk();
+                            openAllBox();
+                          });
                           Navigator.of(context).pop();
                         },
                         child: const Text('Удалить'),

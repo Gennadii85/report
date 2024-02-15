@@ -187,7 +187,7 @@ class AddNewTableRow extends StatelessWidget {
                           onPressed: () {
                             BlocProvider.of<AddNewTableRowCubit>(context)
                                 .resetState();
-                            Navigator.of(context).pop();
+                            goRoute(route, context);
                           },
                           child: const Text('CANCEL'),
                         ),

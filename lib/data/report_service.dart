@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -11,17 +12,29 @@ import '../core/variables_weather_decks.dart';
 
 class PdfInvoiceService {
   Future<void> savePdfFile(String fileName, Uint8List byteList) async {
-    //* final output = await getTemporaryDirectory(); это для IOS
-    final output = await getTemporaryDirectory(); //* это под Android
+    final output = await getTemporaryDirectory(); //* это под Android и для IOS
     var filePath = "${output.path}/$fileName.pdf";
     final file = File(filePath);
     await file.writeAsBytes(byteList);
-    // await OpenDocument.openDocument(filePath: filePath);
+    await OpenFile.open(filePath);
+  }
+
+  Future<List<Uint8List>> getImageList(List<String> images) async {
+    List<Uint8List> sectionPages = [];
+    for (var element in images) {
+      File file = File(element);
+      Uint8List fileBytes = await file.readAsBytes();
+      ByteData data = fileBytes.buffer.asByteData();
+      Uint8List bytes =
+          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+      // Uint8List imageData = (await rootBundle.load(file)).buffer.asUint8List();
+      sectionPages.add(bytes);
+    }
+    return sectionPages;
   }
 
   Future<Uint8List> createReport() async {
-    //* await getTemporaryDirectory();
-    await getTemporaryDirectory(); //* это под Android
+    await getTemporaryDirectory(); //* это под Android и для IOS
     TextStyle hederStile = TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
     //! Condition
     var condition = Hive.box(VarHave.boxCondition);
@@ -29,45 +42,47 @@ class PdfInvoiceService {
     var forwardSection = Hive.box(VarHave.boxForwardSection);
     final Map forwardSectionMap = forwardSection.get(VarHave.table) ?? {};
     final List<String> forwardImages = forwardSection.get('image') ?? [];
-    final List<Uint8List> forwardPages = [];
-    for (var element in forwardImages) {
-      Uint8List imageData =
-          (await rootBundle.load(element)).buffer.asUint8List();
-      forwardPages.add(imageData);
-    }
+    final List<Uint8List> forwardPages = await getImageList(forwardImages);
+
     //! Middle Section
     var middleSection = Hive.box(VarHave.boxMiddleSection);
     final Map middleSectionMap = middleSection.get(VarHave.table) ?? {};
     final List<String> middleImages = middleSection.get('image') ?? [];
-    final List<Uint8List> middlePages = [];
-    for (var element in middleImages) {
-      Uint8List imageData =
-          (await rootBundle.load(element)).buffer.asUint8List();
-      middlePages.add(imageData);
-    }
-    print(middlePages);
+    final List<Uint8List> middlePages = await getImageList(middleImages);
 
     //! Aft Section
     var aftSection = Hive.box(VarHave.boxAftSection);
     final Map aftSectionMap = aftSection.get(VarHave.table) ?? {};
     final List<String> aftImages = aftSection.get('image') ?? [];
-    final List<Uint8List> aftPages = [];
-    for (var element in aftImages) {
-      Uint8List imageData =
-          (await rootBundle.load(element)).buffer.asUint8List();
-      aftPages.add(imageData);
-    }
+    final List<Uint8List> aftPages = await getImageList(aftImages);
 
     //! Port Side
     var boxPortSide = Hive.box(VarHave.boxPortSide);
     final Map portSideMap = boxPortSide.get(VarHave.table) ?? {};
     final List<String> portSideImages = boxPortSide.get(VarHave.image) ?? [];
-    final List<Uint8List> portSidePages = [];
-    for (var element in portSideImages) {
-      Uint8List imageData =
-          (await rootBundle.load(element)).buffer.asUint8List();
-      portSidePages.add(imageData);
-    }
+    final List<Uint8List> portSidePages = await getImageList(portSideImages);
+
+    //! Forecastle Deck
+    var boxForecastleDeck = Hive.box(VarHave.boxForecastleDeck);
+    final Map forecastleDeckMap = boxForecastleDeck.get(VarHave.table) ?? {};
+    final List<String> forecastleDeckImages =
+        boxForecastleDeck.get(VarHave.image) ?? [];
+    final List<Uint8List> forecastleDeckPages =
+        await getImageList(forecastleDeckImages);
+
+    //! StarboardSide
+    var boxStarboardSide = Hive.box(VarHave.boxStarboardSide);
+    final Map starboardSideMap = boxStarboardSide.get(VarHave.table) ?? {};
+    final List<String> starboardSideImages =
+        boxStarboardSide.get(VarHave.image) ?? [];
+    final List<Uint8List> starboardSidePages =
+        await getImageList(starboardSideImages);
+
+    //! Poop Deck
+    var boxPoopDeck = Hive.box(VarHave.boxPoopDeck);
+    final Map poopDeckMap = boxPoopDeck.get(VarHave.table) ?? {};
+    final List<String> poopDeckImages = boxPoopDeck.get(VarHave.image) ?? [];
+    final List<Uint8List> poopDeckPages = await getImageList(poopDeckImages);
 
     final pdf = Document();
     const pageTheme = PageTheme(pageFormat: PdfPageFormat.a4);
@@ -120,6 +135,18 @@ class PdfInvoiceService {
             weatherDecksTable(
                 portSideMap, hederStile, VarWeather.portSideTitle),
             imagesSectionPDF(portSidePages, pageTheme),
+            //! Forecastle Deck
+            weatherDecksTable(
+                forecastleDeckMap, hederStile, VarWeather.forecastleDeckTitle),
+            imagesSectionPDF(forecastleDeckPages, pageTheme),
+            //! StarboardSide
+            weatherDecksTable(
+                starboardSideMap, hederStile, VarWeather.starboardSideTitle),
+            imagesSectionPDF(starboardSidePages, pageTheme),
+            //! Poop Deck
+            weatherDecksTable(
+                poopDeckMap, hederStile, VarWeather.poopDeckTitle),
+            imagesSectionPDF(poopDeckPages, pageTheme),
           ];
         },
       ),
