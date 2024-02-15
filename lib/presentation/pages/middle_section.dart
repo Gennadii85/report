@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -32,6 +35,7 @@ class _MiddleSectionState extends State<MiddleSection> {
       List<String> save = images;
       save.add(image.path);
       Hive.box(VarHave.boxMiddleSection).put('image', save);
+      print(image.path);
     });
   }
 

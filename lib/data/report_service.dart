@@ -3,7 +3,6 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:open_document/open_document.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -12,15 +11,17 @@ import '../core/variables_weather_decks.dart';
 
 class PdfInvoiceService {
   Future<void> savePdfFile(String fileName, Uint8List byteList) async {
-    final output = await getTemporaryDirectory();
+    //* final output = await getTemporaryDirectory(); это для IOS
+    final output = await getTemporaryDirectory(); //* это под Android
     var filePath = "${output.path}/$fileName.pdf";
     final file = File(filePath);
     await file.writeAsBytes(byteList);
-    await OpenDocument.openDocument(filePath: filePath);
+    // await OpenDocument.openDocument(filePath: filePath);
   }
 
   Future<Uint8List> createReport() async {
-    await getTemporaryDirectory();
+    //* await getTemporaryDirectory();
+    await getTemporaryDirectory(); //* это под Android
     TextStyle hederStile = TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
     //! Condition
     var condition = Hive.box(VarHave.boxCondition);
@@ -44,6 +45,7 @@ class PdfInvoiceService {
           (await rootBundle.load(element)).buffer.asUint8List();
       middlePages.add(imageData);
     }
+    print(middlePages);
 
     //! Aft Section
     var aftSection = Hive.box(VarHave.boxAftSection);
@@ -216,7 +218,7 @@ class PdfInvoiceService {
   }
 
   Widget imagesSectionPDF(List<Uint8List> pages, pageTheme) {
-    List<Widget> sss = pages
+    List<Widget> pic = pages
         .map(
           (e) => Image(
             MemoryImage(e),
@@ -229,7 +231,7 @@ class PdfInvoiceService {
       crossAxisSpacing: 20.0,
       mainAxisSpacing: -30.0,
       childAspectRatio: 1,
-      children: sss,
+      children: pic,
     );
   }
 
