@@ -26,10 +26,6 @@ class VarWeather {
       'Deck fittings',
       ['777', '888', '999'],
     ],
-    // [
-    //   'More',
-    //   ['2345', '56756', '89977'],
-    // ]
   ];
 
   static const List dataForecastleDeck = [

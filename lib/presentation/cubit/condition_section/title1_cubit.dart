@@ -27,11 +27,9 @@ class Title1Cubit extends Cubit<Title1State> {
   }
 
   void saveCondition(String boxName, context) async {
-    // boxName = 'Condition'
     var box = await Hive.openBox(boxName);
     box.put('title', state.title);
     box.put('description', state.description);
-    // box.close();
     Massage().saveMassage(context);
   }
 }

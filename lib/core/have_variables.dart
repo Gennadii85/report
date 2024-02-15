@@ -13,4 +13,16 @@ class VarHave {
   static const String boxForecastleDeck = 'Forecastle Deck';
   static const String boxStarboardSide = 'Starboard Side';
   static const String boxPoopDeck = 'Poop Deck ';
+  //! box для трех секций (Accommodation, Engine Room, Cargo Compartments)
+  static const String boxAccEngCar = 'AccEngCar ';
+  //! ключ для Accommodation
+  static const String valueAccommodation = 'valueAccommodation';
+  static const String imageAccommodation = 'imageAccommodation';
+  //! ключ для Engine Room
+  static const String valueEngineRoom = 'valueEngineRoom';
+  static const String imageEngineRoom = 'imageEngineRoom';
+
+  //! ключ для Cargo Compartments
+  static const String valueCargoCompartments = 'valueCargoCompartments';
+  static const String imageCargoCompartments = 'imageCargoCompartments';
 }
