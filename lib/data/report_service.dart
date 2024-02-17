@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import '../core/have_variables.dart';
+import '../core/variables_accom_eng_cargo.dart';
 import '../core/variables_weather_decks.dart';
 
 class PdfInvoiceService {
@@ -84,6 +85,36 @@ class PdfInvoiceService {
     final List<String> poopDeckImages = boxPoopDeck.get(VarHave.image) ?? [];
     final List<Uint8List> poopDeckPages = await getImageList(poopDeckImages);
 
+    //! ACCOMMODATION
+    final Map accommodationMap =
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueAccommodation);
+    final String accommodationValue =
+        accommodationMap.entries.first.value.toString();
+    final List<String> accommodationImages =
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.imageAccommodation) ?? [];
+    final List<Uint8List> accommodationPages =
+        await getImageList(accommodationImages);
+
+    //! ENGINE ROOM
+    final Map engineRoomMap =
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueEngineRoom);
+    final String engineRoomValue = engineRoomMap.entries.first.value.toString();
+    final List<String> engineRoomImages =
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.imageEngineRoom) ?? [];
+    final List<Uint8List> engineRoomPages =
+        await getImageList(engineRoomImages);
+
+    //! CARGO COMPARTMENTS
+    final Map cargoCompartmentsMap =
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueCargoCompartments);
+    final String cargoCompartmentsValue =
+        cargoCompartmentsMap.entries.first.value.toString();
+    final List<String> cargoCompartmentsImages =
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.imageCargoCompartments) ??
+            [];
+    final List<Uint8List> cargoCompartmentsPages =
+        await getImageList(cargoCompartmentsImages);
+
     final pdf = Document();
     const pageTheme = PageTheme(pageFormat: PdfPageFormat.a4);
     pdf.addPage(
@@ -135,18 +166,37 @@ class PdfInvoiceService {
             weatherDecksTable(
                 portSideMap, hederStile, VarWeather.portSideTitle),
             imagesSectionPDF(portSidePages, pageTheme),
+            sizedBox15(),
             //! Forecastle Deck
             weatherDecksTable(
                 forecastleDeckMap, hederStile, VarWeather.forecastleDeckTitle),
             imagesSectionPDF(forecastleDeckPages, pageTheme),
+            sizedBox15(),
             //! StarboardSide
             weatherDecksTable(
                 starboardSideMap, hederStile, VarWeather.starboardSideTitle),
             imagesSectionPDF(starboardSidePages, pageTheme),
+            sizedBox15(),
             //! Poop Deck
             weatherDecksTable(
                 poopDeckMap, hederStile, VarWeather.poopDeckTitle),
             imagesSectionPDF(poopDeckPages, pageTheme),
+            sizedBox15(),
+            //! ACCOMMODATION
+            varAccEngCarDescription(VarAccEngCar.accommodationTitle, hederStile,
+                accommodationValue),
+            imagesSectionPDF(accommodationPages, pageTheme),
+            sizedBox15(),
+            //! ENGINE ROOM
+            varAccEngCarDescription(
+                VarAccEngCar.engineRoomTitle, hederStile, engineRoomValue),
+            imagesSectionPDF(engineRoomPages, pageTheme),
+            sizedBox15(),
+            //! CARGO COMPARTMENTS
+            varAccEngCarDescription(VarAccEngCar.cargoCompartmentsTitle,
+                hederStile, cargoCompartmentsValue),
+            imagesSectionPDF(cargoCompartmentsPages, pageTheme),
+            sizedBox15(),
           ];
         },
       ),
@@ -299,6 +349,18 @@ class PdfInvoiceService {
       ),
       SizedBox(height: 15),
       ...tableList,
+    ]);
+  }
+
+  Widget varAccEngCarDescription(
+      String title, TextStyle hederStile, String value) {
+    return Column(children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [Text(title, style: hederStile)],
+      ),
+      SizedBox(height: 15),
+      Text(value)
     ]);
   }
 }
