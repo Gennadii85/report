@@ -7,7 +7,7 @@ class VarAccEngCar {
   static const String engineRoomTitle = 'ENGINE ROOM';
   static const String cargoCompartmentsTitle = 'CARGO COMPARTMENTS';
 
-  static const List dataAccommodation = [
+  static const List<List> dataAccommodation = [
     [
       'Accommodation',
       [
@@ -17,7 +17,7 @@ class VarAccEngCar {
       ]
     ]
   ];
-  static const List dataEngineRoom = [
+  static const List<List> dataEngineRoom = [
     [
       'Engine Room',
       [
@@ -27,7 +27,7 @@ class VarAccEngCar {
       ]
     ]
   ];
-  static const List dataCargoCompartments = [
+  static const List<List> dataCargoCompartments = [
     [
       'Cargo Compartments',
       [

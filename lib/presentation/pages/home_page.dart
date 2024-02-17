@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
     await Hive.openBox(VarHave.boxForecastleDeck);
     await Hive.openBox(VarHave.boxStarboardSide);
     await Hive.openBox(VarHave.boxPoopDeck);
+    await Hive.openBox(VarHave.boxAccEngCar);
   }
 
   @override
