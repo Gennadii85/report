@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../../core/have_variables.dart';
-import '../../data/report_service.dart';
+import '../../data/pdf_ui/report_service.dart';
 import '../widgets/drawer_navigation.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     await Hive.openBox(VarHave.boxStarboardSide);
     await Hive.openBox(VarHave.boxPoopDeck);
     await Hive.openBox(VarHave.boxAccEngCar);
+    await Hive.openBox(VarHave.boxHolds);
   }
 
   @override

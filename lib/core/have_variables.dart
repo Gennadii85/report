@@ -3,6 +3,8 @@ class VarHave {
   static const String image = 'image';
   //! везде ключ для таблиц
   static const String table = 'table';
+  //! ключ для json строки в boxHolds
+  static const String holds = 'holds';
   //! имена боксов по секциям
   static const String boxForwardSection = 'Forward Section';
   static const String boxCondition = 'Condition';
@@ -12,7 +14,8 @@ class VarHave {
   static const String boxPortSide = 'Port Side';
   static const String boxForecastleDeck = 'Forecastle Deck';
   static const String boxStarboardSide = 'Starboard Side';
-  static const String boxPoopDeck = 'Poop Deck ';
+  static const String boxPoopDeck = 'Poop Deck';
+  static const String boxHolds = 'Holds';
   //! box для трех секций (Accommodation, Engine Room, Cargo Compartments)
   static const String boxAccEngCar = 'AccEngCar ';
   //! ключ для Accommodation
@@ -21,7 +24,6 @@ class VarHave {
   //! ключ для Engine Room
   static const String valueEngineRoom = 'valueEngineRoom';
   static const String imageEngineRoom = 'imageEngineRoom';
-
   //! ключ для Cargo Compartments
   static const String valueCargoCompartments = 'valueCargoCompartments';
   static const String imageCargoCompartments = 'imageCargoCompartments';

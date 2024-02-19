@@ -7,9 +7,9 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
-import '../core/have_variables.dart';
-import '../core/variables_accom_eng_cargo.dart';
-import '../core/variables_weather_decks.dart';
+import '../../core/have_variables.dart';
+import '../../core/variables_accom_eng_cargo.dart';
+import '../../core/variables_weather_decks.dart';
 
 class PdfInvoiceService {
   Future<void> savePdfFile(String fileName, Uint8List byteList) async {
