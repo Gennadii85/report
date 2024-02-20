@@ -1,52 +1,50 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:pdf_invoice_generator_flutter/presentation/widgets/drawer_navigation.dart';
-
-import '../../core/have_variables.dart';
+import '../../presentation/widgets/drawer_navigation.dart';
+import '../../data/repositories/holds_repositories.dart';
 import '../cubit/add_new_table_row/add_new_table_row_cubit.dart';
 
-class AddNewTableRow extends StatelessWidget {
-  AddNewTableRow({
+class AddNewTableRowHold extends StatelessWidget {
+  const AddNewTableRowHold({
     super.key,
     required this.boxName,
     required this.dataList,
     required this.route,
-    this.keyBoxValue,
-    this.keyBoxImage,
-    this.isNoWeather,
+    required this.tableMap,
+    required this.nameHoldSection,
+    required this.indexHold,
+    required this.indexSection,
   });
-
-  final String boxName; //бокс куда сохраняем данные  VarHave.boxPortSide;
-
-  final List
-      dataList; //лист данных - список списков => index[0]название  index[1]значение!
+  final Map tableMap;
+  final String boxName; //бокс куда сохраняем данные
+  final List dataList; //список списков=>index[0]название index[1]значение!
   final MaterialPageRoute route;
-  final String? keyBoxValue;
-  final String? keyBoxImage;
-  final bool? isNoWeather;
+  final String nameHoldSection;
+  final int indexHold;
+  final int indexSection;
 
-  void saveTableRow(String name, String value) {
-    if (isNoWeather == true) {
-      var box = Hive.box(boxName);
-      Map maps = box.get(keyBoxValue) ?? {};
-      maps.addAll({name: value});
-      box.put(keyBoxValue, maps);
-    } else {
-      var box = Hive.box(boxName);
-      Map maps = box.get(VarHave.table) ?? {};
-      maps.addAll({name: value});
-      box.put(VarHave.table, maps);
-    }
-  }
+  void saveTableRow(
+    String name,
+    String value,
+    Map tableMap,
+    int indexHold,
+    int indexSection,
+  ) =>
+      HoldsRepositories().saveTableDada(
+        name,
+        value,
+        nameHoldSection,
+        tableMap,
+        indexHold,
+        indexSection,
+      );
 
   void goRoute(route, context) => Navigator.of(context).push(route);
 
-  final List<String> tableNameList = [];
-
   @override
   Widget build(BuildContext context) {
+    final List<String> tableNameList = [];
     for (var element in dataList) {
       tableNameList.add(element[0]);
     }
@@ -178,6 +176,9 @@ class AddNewTableRow extends StatelessWidget {
                                 saveTableRow(
                                   state.name!,
                                   state.editValue ?? state.value,
+                                  tableMap,
+                                  indexHold,
+                                  indexSection,
                                 );
                                 BlocProvider.of<AddNewTableRowCubit>(context)
                                     .resetState();

@@ -5,6 +5,10 @@ class VarHolds {
       TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
   static const String forwardTransverseBulkheadTitle =
       'Forward transverse bulkhead';
+  static const String starboardShipsSideTitle = 'Starboard ships side';
+  static const String aftTransverseBulkheadTitle = 'Aft transverse bulkhead';
+  static const String portShipsSideTitle = 'Port ships side';
+  static const String tankTopsTitle = 'Tank tops';
 
   static const List dataForwardTransverseBulkhead = [
     [

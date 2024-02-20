@@ -1,22 +1,50 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class HoldModel {
-  List<HoldSectionModel> holdSection;
-  HoldModel({
-    required this.holdSection,
+class AllHoldModel {
+  final List<HoldModel> listAllHold;
+  AllHoldModel({
+    required this.listAllHold,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'holdSection': holdSection.map((x) => x.toMap()).toList(),
+      'allHold': listAllHold.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory AllHoldModel.fromMap(Map<String, dynamic> map) {
+    return AllHoldModel(
+      listAllHold: List<HoldModel>.from(
+        (map['allHold'] as List<dynamic>).map<HoldModel>(
+          (x) => HoldModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory AllHoldModel.fromJson(String source) =>
+      AllHoldModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class HoldModel {
+  final List<HoldSectionModel> listHoldSection;
+  HoldModel({
+    required this.listHoldSection,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'holdSection': listHoldSection.map((x) => x.toMap()).toList(),
     };
   }
 
   factory HoldModel.fromMap(Map<String, dynamic> map) {
     return HoldModel(
-      holdSection: List<HoldSectionModel>.from(
-        (map['holdSection'] as List<HoldSectionModel>).map<HoldSectionModel>(
+      listHoldSection: List<HoldSectionModel>.from(
+        (map['holdSection'] as List<dynamic>).map<HoldSectionModel>(
           (x) => HoldSectionModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
@@ -30,20 +58,20 @@ class HoldModel {
 }
 
 class HoldSectionModel {
-  String name;
-  Map tableMap;
-  List<String> imagePath;
+  final String name;
+  final Map tableMap;
+  final List<String> listImagePath;
   HoldSectionModel({
     required this.name,
     required this.tableMap,
-    required this.imagePath,
+    required this.listImagePath,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
       'tableMap': tableMap,
-      'imagePath': imagePath,
+      'imagePath': listImagePath,
     };
   }
 
@@ -51,7 +79,7 @@ class HoldSectionModel {
     return HoldSectionModel(
       name: map['name'] as String,
       tableMap: Map.from((map['tableMap'] as Map)),
-      imagePath: List<String>.from((map['imagePath'] as List<String>)),
+      listImagePath: List.from((map['imagePath'] as List)),
     );
   }
 
@@ -60,3 +88,12 @@ class HoldSectionModel {
   factory HoldSectionModel.fromJson(String source) =>
       HoldSectionModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
+
+
+
+
+  //  HoldSectionModel.fromJson(Map<String, dynamic> json) {
+  //   name = json['name'];
+  //   tableMap = json['tableMap'];
+  //   imagePath = List<String>.from(json['imagePath']) ;
+  // }
