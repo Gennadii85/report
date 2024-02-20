@@ -87,7 +87,7 @@ class PdfInvoiceService {
 
     //! ACCOMMODATION
     final Map accommodationMap =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueAccommodation);
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueAccommodation) ?? {};
     final String accommodationValue =
         accommodationMap.entries.first.value.toString();
     final List<String> accommodationImages =
@@ -97,7 +97,7 @@ class PdfInvoiceService {
 
     //! ENGINE ROOM
     final Map engineRoomMap =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueEngineRoom);
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueEngineRoom) ?? {};
     final String engineRoomValue = engineRoomMap.entries.first.value.toString();
     final List<String> engineRoomImages =
         Hive.box(VarHave.boxAccEngCar).get(VarHave.imageEngineRoom) ?? [];
@@ -106,7 +106,8 @@ class PdfInvoiceService {
 
     //! CARGO COMPARTMENTS
     final Map cargoCompartmentsMap =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueCargoCompartments);
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueCargoCompartments) ??
+            {};
     final String cargoCompartmentsValue =
         cargoCompartmentsMap.entries.first.value.toString();
     final List<String> cargoCompartmentsImages =

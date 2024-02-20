@@ -25,6 +25,19 @@ class _HomePageState extends State<HomePage> {
     await Hive.openBox(VarHave.boxAccEngCar);
   }
 
+  Future deleteAllBoxValue() async {
+    await Hive.box(VarHave.boxCondition).clear();
+    await Hive.box(VarHave.boxForwardSection).clear();
+    await Hive.box(VarHave.boxMiddleSection).clear();
+    await Hive.box(VarHave.boxAftSection).clear();
+    await Hive.box(VarHave.boxPortSide).clear();
+    await Hive.box(VarHave.boxForecastleDeck).clear();
+    await Hive.box(VarHave.boxStarboardSide).clear();
+    await Hive.box(VarHave.boxPoopDeck).clear();
+    await Hive.box(VarHave.boxAccEngCar).clear();
+    // await Hive.box(VarHave.boxHolds).clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     openAllBox();
@@ -46,8 +59,7 @@ class _HomePageState extends State<HomePage> {
                       TextButton(
                         onPressed: () {
                           setState(() {
-                            Hive.deleteFromDisk();
-                            openAllBox();
+                            deleteAllBoxValue();
                           });
                           Navigator.of(context).pop();
                         },
