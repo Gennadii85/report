@@ -5,9 +5,10 @@ import '../../core/variables_holds.dart';
 import '../model/holds_model.dart';
 
 class HoldsRepositories {
-  void createHold(List listHolds) {
-    int nextHoldNumber = listHolds.length + 1;
-    int holdKey = nextHoldNumber;
+  void createHold() {
+    // int nextHoldNumber = listHolds.length + 1;
+    // int holdKey = nextHoldNumber;
+    List listHolds = Hive.box(VarHave.boxHolds).get(VarHave.holds) ?? [];
     HoldModel holdExample = HoldModel(
       nameForward: VarHolds.forwardTransverseBulkheadTitle,
       tableMapForward: {},
@@ -25,23 +26,24 @@ class HoldsRepositories {
       tableMapTank: {},
       listImagePathTank: [],
     );
-
-    Hive.box(VarHave.boxHolds).put(holdKey, holdExample);
+    listHolds.add(holdExample);
+    Hive.box(VarHave.boxHolds).put(VarHave.holds, listHolds);
   }
 
-  void deleteHold(holdKey) {
-    int key = int.parse(holdKey);
-    Map ddd = Hive.box(VarHave.boxHolds).toMap();
-    print(ddd);
-    ddd.remove(key);
-    print(ddd);
+  void deleteHold(int index) {
+    // int key = int.parse(holdKey);
+    List listHolds = Hive.box(VarHave.boxHolds).get(VarHave.holds);
+    listHolds.removeAt(index);
+    // print(ddd);
+    // ddd.remove(key);
+    // print(ddd);
 
-    Hive.box(VarHave.boxHolds).clear();
+    Hive.box(VarHave.boxHolds).put(VarHave.holds, listHolds);
     // List list = ddd.entries.map((e) => e.value).toList();
     // Map newddd = list.asMap();
     // newddd.map((key, value) => Hive.box(VarHave.boxHolds).put(key, value));
 
-    Hive.box(VarHave.boxHolds).addAll(ddd.values);
+    // Hive.box(VarHave.boxHolds).addAll(ddd.values);
   }
 
   void saveTableDada(

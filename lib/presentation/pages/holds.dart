@@ -21,10 +21,7 @@ class _AllHoldsState extends State<AllHolds> {
 
   @override
   Widget build(BuildContext context) {
-    List listKeysHolds = Hive.box(VarHave.boxHolds).keys.toList();
-
-    // print(listKeysHolds);
-
+    List listHolds = Hive.box(VarHave.boxHolds).get(VarHave.holds) ?? [];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -36,12 +33,12 @@ class _AllHoldsState extends State<AllHolds> {
           children: [
             ListView.builder(
               shrinkWrap: true,
-              itemCount: listKeysHolds.length,
+              itemCount: listHolds.length,
               itemBuilder: ((context, index) {
                 return AllHoldRow(
-                  name: listKeysHolds[index].toString(),
-                  delete: (name) {
-                    HoldsRepositories().deleteHold(name);
+                  name: 'HOLD ${index + 1}',
+                  delete: () {
+                    HoldsRepositories().deleteHold(index);
                     setState(() {});
                   },
                 );
@@ -49,7 +46,7 @@ class _AllHoldsState extends State<AllHolds> {
             ),
             TextButton(
               onPressed: () {
-                HoldsRepositories().createHold(listKeysHolds);
+                HoldsRepositories().createHold();
                 setState(() {});
               },
               child: const Text('Создать HOLD'),
@@ -90,7 +87,7 @@ class AllHoldRow extends StatelessWidget {
           children: [
             Text(name),
             IconButton(
-              onPressed: () => delete(name),
+              onPressed: () => delete(),
               icon: const Icon(Icons.delete_forever_outlined),
             ),
           ],
