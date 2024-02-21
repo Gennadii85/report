@@ -5,121 +5,44 @@ import '../../core/variables_holds.dart';
 import '../model/holds_model.dart';
 
 class HoldsRepositories {
-  void createHold() {
-    String jsonString = Hive.box(VarHave.boxHolds).get(VarHave.holds) ?? '';
-    if (jsonString.isEmpty) {
-      List<HoldModel> listHoldModel = [
-        HoldModel(
-          listHoldSection: [
-            HoldSectionModel(
-                name: VarHolds.forwardTransverseBulkheadTitle,
-                tableMap: {},
-                listImagePath: []),
-            HoldSectionModel(
-                name: VarHolds.starboardShipsSideTitle,
-                tableMap: {},
-                listImagePath: []),
-            HoldSectionModel(
-                name: VarHolds.aftTransverseBulkheadTitle,
-                tableMap: {},
-                listImagePath: []),
-            HoldSectionModel(
-                name: VarHolds.portShipsSideTitle,
-                tableMap: {},
-                listImagePath: []),
-            HoldSectionModel(
-                name: VarHolds.tankTopsTitle, tableMap: {}, listImagePath: []),
-          ],
-        ),
-      ];
+  void createHold(List listHolds) {
+    int nextHoldNumber = listHolds.length + 1;
+    int holdKey = nextHoldNumber;
+    HoldModel holdExample = HoldModel(
+      nameForward: VarHolds.forwardTransverseBulkheadTitle,
+      tableMapForward: {},
+      listImagePathForward: [],
+      nameStarboard: VarHolds.starboardShipsSideTitle,
+      tableMapStarboard: {},
+      listImagePathStarboard: [],
+      nameAft: VarHolds.aftTransverseBulkheadTitle,
+      tableMapAft: {},
+      listImagePathAft: [],
+      namePort: VarHolds.portShipsSideTitle,
+      tableMapPort: {},
+      listImagePathPort: [],
+      nameTank: VarHolds.tankTopsTitle,
+      tableMapTank: {},
+      listImagePathTank: [],
+    );
 
-      String nevJsonString = AllHoldModel(listAllHold: listHoldModel).toJson();
-      Hive.box(VarHave.boxHolds).put(VarHave.holds, nevJsonString);
-    } else {
-      List<HoldModel> listHoldModel =
-          AllHoldModel.fromJson(jsonString).listAllHold;
-      HoldModel nev = HoldModel(
-        listHoldSection: [
-          HoldSectionModel(
-              name: VarHolds.forwardTransverseBulkheadTitle,
-              tableMap: {},
-              listImagePath: []),
-          HoldSectionModel(
-              name: VarHolds.starboardShipsSideTitle,
-              tableMap: {},
-              listImagePath: []),
-          HoldSectionModel(
-              name: VarHolds.aftTransverseBulkheadTitle,
-              tableMap: {},
-              listImagePath: []),
-          HoldSectionModel(
-              name: VarHolds.portShipsSideTitle,
-              tableMap: {},
-              listImagePath: []),
-          HoldSectionModel(
-              name: VarHolds.tankTopsTitle, tableMap: {}, listImagePath: []),
-        ],
-      );
-      listHoldModel.add(nev);
-      String nevJsonString = AllHoldModel(listAllHold: listHoldModel).toJson();
-      Hive.box(VarHave.boxHolds).put(VarHave.holds, nevJsonString);
-    }
+    Hive.box(VarHave.boxHolds).put(holdKey, holdExample);
   }
 
-  List<HoldModel> getAllHolds(String jsonString) {
-    List<HoldModel> listModelHold = [];
-    if (jsonString.isEmpty) {
-      List<HoldModel> listModelHold = [
-        HoldModel(
-          listHoldSection: [
-            HoldSectionModel(
-                name: VarHolds.forwardTransverseBulkheadTitle,
-                tableMap: {},
-                listImagePath: []),
-            HoldSectionModel(
-                name: VarHolds.starboardShipsSideTitle,
-                tableMap: {},
-                listImagePath: []),
-            HoldSectionModel(
-                name: VarHolds.aftTransverseBulkheadTitle,
-                tableMap: {},
-                listImagePath: []),
-            HoldSectionModel(
-                name: VarHolds.portShipsSideTitle,
-                tableMap: {},
-                listImagePath: []),
-            HoldSectionModel(
-                name: VarHolds.tankTopsTitle, tableMap: {}, listImagePath: []),
-          ],
-        ),
-      ];
-      return listModelHold;
-    } else {
-      listModelHold = AllHoldModel.fromJson(jsonString).listAllHold;
-    }
+  void deleteHold(holdKey) {
+    int key = int.parse(holdKey);
+    Map ddd = Hive.box(VarHave.boxHolds).toMap();
+    print(ddd);
+    ddd.remove(key);
+    print(ddd);
 
-    return listModelHold;
+    Hive.box(VarHave.boxHolds).clear();
+    // List list = ddd.entries.map((e) => e.value).toList();
+    // Map newddd = list.asMap();
+    // newddd.map((key, value) => Hive.box(VarHave.boxHolds).put(key, value));
+
+    Hive.box(VarHave.boxHolds).addAll(ddd.values);
   }
-
-  // HoldModel getOneHold(int holdNumber, String nameSection) {
-  //   late HoldModel holdModel;
-  //   String jsonString = Hive.box(VarHave.boxHolds).get(VarHave.holds);
-  //   // if (jsonString.isEmpty) {
-  //   //   model = HoldSectionModel(imagePath: [], name: nameSection, tableMap: {});
-  //   // } else {
-  //   final List<HoldModel> listHoldModel =
-  //       AllHoldModel.fromJson(jsonString).listAllHold;
-  //   holdModel = listHoldModel.elementAt(holdNumber - 1);
-
-  //   // }
-  //   return holdModel;
-  // }
-
-  // List<String> getImages(HoldSectionModel model) {
-  //   late List<String> images;
-  //   images = model.listImagePath;
-  //   return images;
-  // }
 
   void saveTableDada(
     String name,
@@ -128,16 +51,5 @@ class HoldsRepositories {
     Map tableMap,
     int indexHold,
     int indexSection,
-  ) {
-    // tableMap.addAll({name: value});
-    String jsonString = Hive.box(VarHave.boxHolds).get(VarHave.holds);
-    List<HoldModel> listHolds = HoldsRepositories().getAllHolds(jsonString);
-
-    listHolds.map(
-        (el) => el.listHoldSection[indexHold].tableMap.addAll({name: value}));
-
-    final String jsonSaved = AllHoldModel(listAllHold: listHolds).toJson();
-    print(jsonSaved);
-    Hive.box(VarHave.boxHolds).put(VarHave.holds, jsonSaved);
-  }
+  ) {}
 }

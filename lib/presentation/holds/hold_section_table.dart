@@ -21,7 +21,7 @@ class HoldSectionTable extends StatefulWidget {
   final int holdNumber;
   final String nameSection;
   final MaterialPageRoute route;
-  final HoldSectionModel model;
+  final model;
   final int indexHold;
   final int indexSection;
 

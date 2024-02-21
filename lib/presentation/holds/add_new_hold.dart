@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:pdf_invoice_generator_flutter/presentation/holds/table_section_hold.dart';
+import 'package:pdf_invoice_generator_flutter/presentation/holds/hold_section_table.dart';
 
 import '../../core/variables_holds.dart';
 import '../../data/model/holds_model.dart';
@@ -23,8 +23,7 @@ class _AddNewHoldState extends State<AddNewHold> {
   @override
   Widget build(BuildContext context) {
     final int indexHold = widget.holdNumber - 1;
-    final List<HoldSectionModel> listHoldSection =
-        widget.holdModel.listHoldSection;
+    final List listHoldSection = widget.holdModel.listImagePathAft;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

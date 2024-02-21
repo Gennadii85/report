@@ -59,9 +59,8 @@ class _HomePageState extends State<HomePage> {
                     actions: [
                       TextButton(
                         onPressed: () {
-                          setState(() {
-                            deleteAllBoxValue();
-                          });
+                          deleteAllBoxValue();
+                          setState(() {});
                           Navigator.of(context).pop();
                         },
                         child: const Text('Удалить'),

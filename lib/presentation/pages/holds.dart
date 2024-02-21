@@ -1,9 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:pdf_invoice_generator_flutter/core/have_variables.dart';
+import 'package:pdf_invoice_generator_flutter/entities/hold_entities.dart';
 import 'package:pdf_invoice_generator_flutter/presentation/holds/add_new_hold.dart';
 
-import '../../data/model/holds_model.dart';
 import '../../data/repositories/holds_repositories.dart';
 import '../widgets/drawer_navigation.dart';
 
@@ -19,14 +21,9 @@ class _AllHoldsState extends State<AllHolds> {
 
   @override
   Widget build(BuildContext context) {
-    String jsonString = Hive.box(VarHave.boxHolds).get(VarHave.holds) ?? '';
-    late List<HoldModel> listHolds;
-    if (jsonString.isEmpty) {
-      listHolds = [];
-    }
-    if (jsonString.isNotEmpty) {
-      listHolds = HoldsRepositories().getAllHolds(jsonString);
-    }
+    List listKeysHolds = Hive.box(VarHave.boxHolds).keys.toList();
+
+    // print(listKeysHolds);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -39,41 +36,62 @@ class _AllHoldsState extends State<AllHolds> {
           children: [
             ListView.builder(
               shrinkWrap: true,
-              itemCount: listHolds.length,
+              itemCount: listKeysHolds.length,
               itemBuilder: ((context, index) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => AddNewHold(
-                            holdNumber: index + 1,
-                            holdModel: listHolds[index],
-                          ),
-                        ),
-                      );
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('HOLD № ${index + 1}'),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.delete_forever_outlined),
-                        ),
-                      ],
-                    ),
-                  ),
+                return AllHoldRow(
+                  name: listKeysHolds[index].toString(),
+                  delete: (name) {
+                    HoldsRepositories().deleteHold(name);
+                    setState(() {});
+                  },
                 );
               }),
             ),
             TextButton(
               onPressed: () {
-                HoldsRepositories().createHold();
+                HoldsRepositories().createHold(listKeysHolds);
                 setState(() {});
               },
               child: const Text('Создать HOLD'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AllHoldRow extends StatelessWidget {
+  final String name;
+  final Function delete;
+  const AllHoldRow({
+    super.key,
+    required this.name,
+    required this.delete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+      child: InkWell(
+        onTap: () {
+          // Navigator.of(context).push(
+          //   MaterialPageRoute(
+          //     builder: (context) => AddNewHold(
+          //       holdNumber: index + 1,
+          //       holdModel: [],
+          //     ),
+          //   ),
+          // );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(name),
+            IconButton(
+              onPressed: () => delete(name),
+              icon: const Icon(Icons.delete_forever_outlined),
             ),
           ],
         ),

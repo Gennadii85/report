@@ -1,99 +1,55 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
+import 'package:hive/hive.dart';
 
-class AllHoldModel {
-  final List<HoldModel> listAllHold;
-  AllHoldModel({
-    required this.listAllHold,
-  });
+part 'holds_model.g.dart';
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'allHold': listAllHold.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  factory AllHoldModel.fromMap(Map<String, dynamic> map) {
-    return AllHoldModel(
-      listAllHold: List<HoldModel>.from(
-        (map['allHold'] as List<dynamic>).map<HoldModel>(
-          (x) => HoldModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory AllHoldModel.fromJson(String source) =>
-      AllHoldModel.fromMap(json.decode(source) as Map<String, dynamic>);
-}
-
+@HiveType(typeId: 1)
 class HoldModel {
-  final List<HoldSectionModel> listHoldSection;
+  @HiveField(0)
+  final String nameForward;
+  @HiveField(1)
+  final Map tableMapForward;
+  @HiveField(2)
+  final List<String> listImagePathForward;
+  @HiveField(3)
+  final String nameStarboard;
+  @HiveField(4)
+  final Map tableMapStarboard;
+  @HiveField(5)
+  final List<String> listImagePathStarboard;
+  @HiveField(6)
+  final String nameAft;
+  @HiveField(7)
+  final Map tableMapAft;
+  @HiveField(8)
+  final List<String> listImagePathAft;
+  @HiveField(9)
+  final String namePort;
+  @HiveField(10)
+  final Map tableMapPort;
+  @HiveField(11)
+  final List<String> listImagePathPort;
+  @HiveField(12)
+  final String nameTank;
+  @HiveField(13)
+  final Map tableMapTank;
+  @HiveField(14)
+  final List<String> listImagePathTank;
+  @HiveField(15)
   HoldModel({
-    required this.listHoldSection,
+    required this.nameForward,
+    required this.tableMapForward,
+    required this.listImagePathForward,
+    required this.nameStarboard,
+    required this.tableMapStarboard,
+    required this.listImagePathStarboard,
+    required this.nameAft,
+    required this.tableMapAft,
+    required this.listImagePathAft,
+    required this.namePort,
+    required this.tableMapPort,
+    required this.listImagePathPort,
+    required this.nameTank,
+    required this.tableMapTank,
+    required this.listImagePathTank,
   });
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'holdSection': listHoldSection.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  factory HoldModel.fromMap(Map<String, dynamic> map) {
-    return HoldModel(
-      listHoldSection: List<HoldSectionModel>.from(
-        (map['holdSection'] as List<dynamic>).map<HoldSectionModel>(
-          (x) => HoldSectionModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory HoldModel.fromJson(String source) =>
-      HoldModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
-
-class HoldSectionModel {
-  final String name;
-  final Map tableMap;
-  final List<String> listImagePath;
-  HoldSectionModel({
-    required this.name,
-    required this.tableMap,
-    required this.listImagePath,
-  });
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-      'tableMap': tableMap,
-      'imagePath': listImagePath,
-    };
-  }
-
-  factory HoldSectionModel.fromMap(Map<String, dynamic> map) {
-    return HoldSectionModel(
-      name: map['name'] as String,
-      tableMap: Map.from((map['tableMap'] as Map)),
-      listImagePath: List.from((map['imagePath'] as List)),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory HoldSectionModel.fromJson(String source) =>
-      HoldSectionModel.fromMap(json.decode(source) as Map<String, dynamic>);
-}
-
-
-
-
-  //  HoldSectionModel.fromJson(Map<String, dynamic> json) {
-  //   name = json['name'];
-  //   tableMap = json['tableMap'];
-  //   imagePath = List<String>.from(json['imagePath']) ;
-  // }
