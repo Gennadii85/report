@@ -1,18 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:pdf_invoice_generator_flutter/data/model/holds_model.dart';
 
-part 'one_hold_state.dart';
+part 'one_hold_forward_state.dart';
 
 class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
-  int indexHold;
+  final int indexHold;
+  final HoldModel holdModel;
 
   OneHoldForwardCubit(
     this.indexHold,
+    this.holdModel,
   ) : super(
           OneHoldForwardState(
-            tableMapForward: {},
-            listImagePathForward: [],
+            tableMapForward: holdModel.tableMapForward,
+            listImagePathForward: holdModel.listImagePathForward,
             valueList: [],
             value: '',
           ),

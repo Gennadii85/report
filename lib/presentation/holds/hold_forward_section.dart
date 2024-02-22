@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../data/model/holds_model.dart';
-import '../cubit/one_hold/one_hold_cubit.dart';
+import '../cubit/one_hold/forward_section/one_hold_forward_cubit.dart';
 import '../widgets/table_row_ui.dart';
 import 'add_new_table_row_hold.dart';
 import 'one_hold.dart';

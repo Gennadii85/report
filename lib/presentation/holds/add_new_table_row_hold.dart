@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pdf_invoice_generator_flutter/core/variables_holds.dart';
 
-import '../cubit/one_hold/one_hold_cubit.dart';
+import '../cubit/one_hold/forward_section/one_hold_forward_cubit.dart';
 
 class AddNewTableRowHold extends StatelessWidget {
   final MaterialPageRoute route;

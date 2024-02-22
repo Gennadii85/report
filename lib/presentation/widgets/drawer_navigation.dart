@@ -7,7 +7,7 @@ import '../pages/condition.dart';
 import '../pages/engine_room.dart';
 import '../pages/forecastle_deck.dart';
 import '../pages/forward_section.dart';
-import '../pages/holds.dart';
+import '../pages/all_holds.dart';
 import '../pages/home_page.dart';
 import '../pages/middle_section.dart';
 import '../pages/poop_deck.dart';
