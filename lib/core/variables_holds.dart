@@ -10,7 +10,7 @@ class VarHolds {
   static const String portShipsSideTitle = 'Port ships side';
   static const String tankTopsTitle = 'Tank tops';
 
-  static const List dataForwardTransverseBulkhead = [
+  static const List dataHoldsTable = [
     [
       'Plating',
       [

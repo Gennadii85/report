@@ -1,12 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:pdf_invoice_generator_flutter/core/have_variables.dart';
-import 'package:pdf_invoice_generator_flutter/entities/hold_entities.dart';
-import 'package:pdf_invoice_generator_flutter/presentation/holds/add_new_hold.dart';
-
+import 'package:pdf_invoice_generator_flutter/presentation/holds/one_hold.dart';
 import '../../data/repositories/holds_repositories.dart';
+import '../cubit/one_hold/one_hold_cubit.dart';
 import '../widgets/drawer_navigation.dart';
 
 class AllHolds extends StatefulWidget {
@@ -35,12 +34,27 @@ class _AllHoldsState extends State<AllHolds> {
               shrinkWrap: true,
               itemCount: listHolds.length,
               itemBuilder: ((context, index) {
-                return AllHoldRow(
-                  name: 'HOLD ${index + 1}',
-                  delete: () {
-                    HoldsRepositories().deleteHold(index);
-                    setState(() {});
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (context) => OneHoldForwardCubit(index),
+                          child: OneHold(
+                            holdIndex: index,
+                            holdModel: listHolds[index],
+                          ),
+                        ),
+                      ),
+                    );
                   },
+                  child: OneHoldRow(
+                    name: 'HOLD ${index + 1}',
+                    delete: () {
+                      HoldsRepositories().deleteHold(index);
+                      setState(() {});
+                    },
+                  ),
                 );
               }),
             ),
@@ -58,10 +72,10 @@ class _AllHoldsState extends State<AllHolds> {
   }
 }
 
-class AllHoldRow extends StatelessWidget {
+class OneHoldRow extends StatelessWidget {
   final String name;
   final Function delete;
-  const AllHoldRow({
+  const OneHoldRow({
     super.key,
     required this.name,
     required this.delete,
@@ -71,27 +85,15 @@ class AllHoldRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
-      child: InkWell(
-        onTap: () {
-          // Navigator.of(context).push(
-          //   MaterialPageRoute(
-          //     builder: (context) => AddNewHold(
-          //       holdNumber: index + 1,
-          //       holdModel: [],
-          //     ),
-          //   ),
-          // );
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(name),
-            IconButton(
-              onPressed: () => delete(),
-              icon: const Icon(Icons.delete_forever_outlined),
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(name),
+          IconButton(
+            onPressed: () => delete(),
+            icon: const Icon(Icons.delete_forever_outlined),
+          ),
+        ],
       ),
     );
   }

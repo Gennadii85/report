@@ -1,50 +1,36 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../presentation/widgets/drawer_navigation.dart';
-import '../../data/repositories/holds_repositories.dart';
+
+import 'package:pdf_invoice_generator_flutter/core/variables_holds.dart';
+
 import '../cubit/add_new_table_row/add_new_table_row_cubit.dart';
+import '../cubit/one_hold/one_hold_cubit.dart';
 
 class AddNewTableRowHold extends StatelessWidget {
+  final MaterialPageRoute route;
+  // final Function updateList;
+  // final Function updateValue;
+  // final Function updateEditValue;
+  // final Function saveTableRow;
+  // final Function resetState;
   const AddNewTableRowHold({
     super.key,
-    required this.boxName,
-    required this.dataList,
     required this.route,
-    required this.tableMap,
-    required this.nameHoldSection,
-    required this.indexHold,
-    required this.indexSection,
+    // required this.updateList,
+    // required this.updateValue,
+    // required this.updateEditValue,
+    // required this.saveTableRow,
+    // required this.resetState,
   });
-  final Map tableMap;
-  final String boxName; //бокс куда сохраняем данные
-  final List dataList; //список списков=>index[0]название index[1]значение!
-  final MaterialPageRoute route;
-  final String nameHoldSection;
-  final int indexHold;
-  final int indexSection;
 
-  void saveTableRow(
-    String name,
-    String value,
-    Map tableMap,
-    int indexHold,
-    int indexSection,
-  ) =>
-      HoldsRepositories().saveTableDada(
-        name,
-        value,
-        nameHoldSection,
-        tableMap,
-        indexHold,
-        indexSection,
-      );
-
-  void goRoute(route, context) => Navigator.of(context).push(route);
+  void goRoute(context) => Navigator.of(context).push(route);
 
   @override
   Widget build(BuildContext context) {
     final List<String> tableNameList = [];
+    List dataList = VarHolds.dataHoldsTable;
     for (var element in dataList) {
       tableNameList.add(element[0]);
     }
@@ -54,7 +40,7 @@ class AddNewTableRowHold extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Добавляем таблицу'),
         ),
-        drawer: const DrawerNavigation(),
+        // drawer: const DrawerNavigation(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -69,7 +55,7 @@ class AddNewTableRowHold extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 50),
-              BlocBuilder<AddNewTableRowCubit, AddNewTableRowState>(
+              BlocBuilder<OneHoldForwardCubit, OneHoldForwardState>(
                 builder: (context, state) {
                   return Column(
                     children: [
@@ -105,7 +91,8 @@ class AddNewTableRowHold extends StatelessWidget {
                                         )
                                         .toList(),
                                     onChanged: (value) {
-                                      BlocProvider.of<AddNewTableRowCubit>(
+                                      // updateList(value!, dataList);
+                                      BlocProvider.of<OneHoldForwardCubit>(
                                         context,
                                       ).updateList(value!, dataList);
                                     },
@@ -142,9 +129,9 @@ class AddNewTableRowHold extends StatelessWidget {
                                         )
                                         .toList(),
                                     onChanged: (value) {
-                                      BlocProvider.of<AddNewTableRowCubit>(
+                                      BlocProvider.of<OneHoldForwardCubit>(
                                         context,
-                                      ).updateValue(value);
+                                      ).updateValue(value!);
                                     },
                                   ),
                                   Padding(
@@ -173,16 +160,14 @@ class AddNewTableRowHold extends StatelessWidget {
                             ),
                             onPressed: () {
                               if (state.name != null) {
-                                saveTableRow(
+                                BlocProvider.of<OneHoldForwardCubit>(context)
+                                    .saveTableRow(
                                   state.name!,
                                   state.editValue ?? state.value,
-                                  tableMap,
-                                  indexHold,
-                                  indexSection,
+                                  context,
                                 );
-                                BlocProvider.of<AddNewTableRowCubit>(context)
-                                    .resetState();
-                                goRoute(route, context);
+
+                                goRoute(context);
                               } else {
                                 showDialog(
                                   context: context,
@@ -208,7 +193,7 @@ class AddNewTableRowHold extends StatelessWidget {
                             onPressed: () {
                               BlocProvider.of<AddNewTableRowCubit>(context)
                                   .resetState();
-                              goRoute(route, context);
+                              goRoute(context);
                             },
                             child: const Text('CANCEL'),
                           ),
@@ -227,7 +212,7 @@ class AddNewTableRowHold extends StatelessWidget {
 
   Future<dynamic> showRedactValue(
     BuildContext context,
-    AddNewTableRowState state,
+    OneHoldForwardState state,
   ) {
     return showDialog(
       context: context,
