@@ -105,4 +105,15 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
       ),
     );
   }
+
+  void resetState() {
+    emit(
+      OneHoldForwardState(
+        tableMapForward: state.tableMapForward,
+        listImagePathForward: state.listImagePathForward,
+        valueList: [],
+        value: '',
+      ),
+    );
+  }
 }

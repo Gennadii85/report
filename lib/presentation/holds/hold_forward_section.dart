@@ -19,6 +19,7 @@ class HoldForwardSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    OneHoldForwardCubit cubit = BlocProvider.of<OneHoldForwardCubit>(context);
     return BlocBuilder<OneHoldForwardCubit, OneHoldForwardState>(
       builder: (context, state) {
         return Column(
@@ -61,6 +62,14 @@ class HoldForwardSection extends StatelessWidget {
                           holdModel: holdModel,
                         ),
                       ),
+                      updateList: (value, dataList) =>
+                          cubit.updateList(value, dataList),
+                      updateValue: (value) => cubit.updateValue(value),
+                      saveTableRow: (name, value, context) =>
+                          cubit.saveTableRow(name, value, context),
+                      resetState: () => cubit.resetState(),
+                      updateEditValue: (textController) =>
+                          cubit.updateEditValue(textController),
                     ),
                   ),
                 );

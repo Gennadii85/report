@@ -35,7 +35,19 @@ class OneHold extends StatelessWidget {
           ],
         ),
         body: SingleChildScrollView(
-          child: HoldForwardSection(holdModel: holdModel, holdIndex: holdIndex),
+          child: Column(
+            children: [
+              HoldForwardSection(holdModel: holdModel, holdIndex: holdIndex),
+
+              //! Starboard ship’s side
+
+              // //! Aft transverse bulkhead
+
+              // //! Port ships side
+
+              // //! Tank tops
+            ],
+          ),
         ),
       ),
     );
