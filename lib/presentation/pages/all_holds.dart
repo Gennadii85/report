@@ -4,9 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pdf_invoice_generator_flutter/core/have_variables.dart';
 import 'package:pdf_invoice_generator_flutter/data/model/holds_model.dart';
+import 'package:pdf_invoice_generator_flutter/presentation/cubit/one_hold/starboard_section/starboard_section_cubit.dart';
 import 'package:pdf_invoice_generator_flutter/presentation/widgets/holds/one_hold.dart';
 import '../../data/repositories/holds_repositories.dart';
-import '../cubit/one_hold/forward_section/one_hold_forward_cubit.dart';
+import '../cubit/one_hold/forward_section/forward_section_cubit.dart';
 import '../widgets/all_section/drawer_navigation.dart';
 
 class AllHolds extends StatefulWidget {
@@ -40,9 +41,17 @@ class _AllHoldsState extends State<AllHolds> {
                     HoldModel holdModel = listHolds[index];
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) =>
-                              OneHoldForwardCubit(index, holdModel),
+                        builder: (context) => MultiBlocProvider(
+                          providers: [
+                            BlocProvider(
+                              create: (context) =>
+                                  OneHoldForwardCubit(index, holdModel),
+                            ),
+                            BlocProvider(
+                              create: (context) =>
+                                  OneHoldStarboardCubit(index, holdModel),
+                            ),
+                          ],
                           child: OneHold(
                             holdIndex: index,
                             holdModel: listHolds[index],

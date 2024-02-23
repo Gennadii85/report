@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-part of 'one_hold_forward_cubit.dart';
+part of 'forward_section_cubit.dart';
 
 class OneHoldForwardState {
   Map tableMapForward;

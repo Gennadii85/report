@@ -49,4 +49,4 @@ linter:
     sort_unnamed_constructors_first: true
     depend_on_referenced_packages: false
     constant_identifier_names: false
-    sort_constructors_first: true
+    sort_constructors_first: false

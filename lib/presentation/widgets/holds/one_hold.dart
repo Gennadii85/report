@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:pdf_invoice_generator_flutter/presentation/pages/all_holds.dart';
 import '../../../data/model/holds_model.dart';
 import '../../../data/repositories/holds_repositories.dart';
-import '../../cubit/one_hold/forward_section/one_hold_forward_cubit.dart';
+import '../../cubit/one_hold/forward_section/forward_section_cubit.dart';
+import '../../cubit/one_hold/starboard_section/starboard_section_cubit.dart';
 import '../all_section/app_bar_save_button.dart';
 import 'hold_forward_section.dart';
+import 'hold_starboard_section.dart';
 
 class OneHold extends StatelessWidget {
   const OneHold({
@@ -30,7 +32,10 @@ class OneHold extends StatelessWidget {
               function: (context) {
                 OneHoldForwardCubit forwardCubit =
                     OneHoldForwardCubit(holdIndex, holdModel);
-                HoldsRepositories().saveHold(holdIndex, forwardCubit);
+                OneHoldStarboardCubit starboardCubit =
+                    OneHoldStarboardCubit(holdIndex, holdModel);
+                HoldsRepositories()
+                    .saveHold(holdIndex, forwardCubit, starboardCubit);
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: ((context) => const AllHolds()),
@@ -43,12 +48,8 @@ class OneHold extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              HoldForwardSection(
-                holdModel: holdModel,
-                holdIndex: holdIndex,
-              ),
-
-              //! Starboard ship’s side
+              HoldForwardSection(holdModel: holdModel, holdIndex: holdIndex),
+              HoldStarboardSection(holdModel: holdModel, holdIndex: holdIndex),
 
               // //! Aft transverse bulkhead
 

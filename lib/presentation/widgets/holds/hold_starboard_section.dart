@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/model/holds_model.dart';
-import '../../cubit/one_hold/forward_section/forward_section_cubit.dart';
+import '../../cubit/one_hold/starboard_section/starboard_section_cubit.dart';
 import '../all_section/table_row_ui.dart';
 import 'add_new_table_row_hold.dart';
 import 'hold_image_picker.dart';
 import 'one_hold.dart';
 
-//! Forward transverse bulkhead
+//! Starboard transverse bulkhead
 
-class HoldForwardSection extends StatelessWidget {
-  const HoldForwardSection({
+class HoldStarboardSection extends StatelessWidget {
+  const HoldStarboardSection({
     super.key,
     required this.holdModel,
     required this.holdIndex,
@@ -21,8 +21,9 @@ class HoldForwardSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OneHoldForwardCubit cubit = BlocProvider.of<OneHoldForwardCubit>(context);
-    return BlocBuilder<OneHoldForwardCubit, OneHoldForwardState>(
+    OneHoldStarboardCubit cubit =
+        BlocProvider.of<OneHoldStarboardCubit>(context);
+    return BlocBuilder<OneHoldStarboardCubit, OneHoldStarboardState>(
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
@@ -31,17 +32,17 @@ class HoldForwardSection extends StatelessWidget {
               //! Table
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(holdModel.nameForward),
+                child: Text(holdModel.nameStarboard),
               ),
               const SizedBox(height: 20),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: state.tableMapForward.length,
+                itemCount: state.tableMapStarboard.length,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: ((context, index) {
                   List nameList = [];
                   List valueList = [];
-                  state.tableMapForward.forEach((key, value) {
+                  state.tableMapStarboard.forEach((key, value) {
                     nameList.add(key);
                     valueList.add(value);
                   });
@@ -49,7 +50,7 @@ class HoldForwardSection extends StatelessWidget {
                     name: nameList[index],
                     value: valueList[index],
                     delete: (name) {
-                      BlocProvider.of<OneHoldForwardCubit>(context)
+                      BlocProvider.of<OneHoldStarboardCubit>(context)
                           .deleteTableRow(name);
                     },
                   );
@@ -84,7 +85,7 @@ class HoldForwardSection extends StatelessWidget {
               const SizedBox(height: 20),
               //! Image
               HoldPickerList(
-                imagesPath: state.listImagePathForward,
+                imagesPath: state.listImagePathStarboard,
                 deleteImage: (index) => cubit.deleteImage(index),
               ),
               const SizedBox(height: 20),

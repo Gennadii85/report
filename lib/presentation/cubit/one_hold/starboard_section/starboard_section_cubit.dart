@@ -1,23 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: sort_constructors_first
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pdf_invoice_generator_flutter/data/model/holds_model.dart';
 
-part 'one_hold_forward_state.dart';
+import '../../../../data/model/holds_model.dart';
 
-class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
+part 'starboard_section_state.dart';
+
+class OneHoldStarboardCubit extends Cubit<OneHoldStarboardState> {
   final int indexHold;
   final HoldModel holdModel;
   final ImagePicker _picker = ImagePicker();
 
-  OneHoldForwardCubit(
+  OneHoldStarboardCubit(
     this.indexHold,
     this.holdModel,
   ) : super(
-          OneHoldForwardState(
-            tableMapForward: holdModel.tableMapForward,
-            listImagePathForward: holdModel.listImagePathForward,
+          OneHoldStarboardState(
+            tableMapStarboard: holdModel.tableMapStarboard,
+            listImagePathStarboard: holdModel.listImagePathStarboard,
             valueList: [],
             value: '',
           ),
@@ -31,48 +33,48 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
       }
     }
     emit(
-      OneHoldForwardState(
+      OneHoldStarboardState(
         valueList: valueList,
         value: valueList.first,
         name: name,
-        tableMapForward: state.tableMapForward,
-        listImagePathForward: state.listImagePathForward,
+        tableMapStarboard: state.tableMapStarboard,
+        listImagePathStarboard: state.listImagePathStarboard,
       ),
     );
   }
 
   void updateValue(String value) {
     emit(
-      OneHoldForwardState(
+      OneHoldStarboardState(
         valueList: state.valueList,
         value: value,
         name: state.name,
-        tableMapForward: state.tableMapForward,
-        listImagePathForward: state.listImagePathForward,
+        tableMapStarboard: state.tableMapStarboard,
+        listImagePathStarboard: state.listImagePathStarboard,
       ),
     );
   }
 
   void updateEditValue(String value) {
     emit(
-      OneHoldForwardState(
+      OneHoldStarboardState(
         valueList: state.valueList,
         value: state.value,
         name: state.name,
         editValue: value,
-        tableMapForward: state.tableMapForward,
-        listImagePathForward: state.listImagePathForward,
+        tableMapStarboard: state.tableMapStarboard,
+        listImagePathStarboard: state.listImagePathStarboard,
       ),
     );
   }
 
   void saveTableRow(String name, String value, context) {
     if (name.isNotEmpty || value.isNotEmpty) {
-      if (state.tableMapForward.containsKey(name)) {
-        state.tableMapForward.remove(name);
-        state.tableMapForward.addAll({name: value});
+      if (state.tableMapStarboard.containsKey(name)) {
+        state.tableMapStarboard.remove(name);
+        state.tableMapStarboard.addAll({name: value});
       } else {
-        state.tableMapForward.addAll({name: value});
+        state.tableMapStarboard.addAll({name: value});
       }
     } else {
       showDialog(
@@ -90,9 +92,9 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
       return;
     }
     emit(
-      OneHoldForwardState(
-        tableMapForward: state.tableMapForward,
-        listImagePathForward: state.listImagePathForward,
+      OneHoldStarboardState(
+        tableMapStarboard: state.tableMapStarboard,
+        listImagePathStarboard: state.listImagePathStarboard,
         valueList: [],
         value: '',
       ),
@@ -100,11 +102,11 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
   }
 
   void deleteTableRow(name) {
-    state.tableMapForward.remove(name);
+    state.tableMapStarboard.remove(name);
     emit(
-      OneHoldForwardState(
-        tableMapForward: state.tableMapForward,
-        listImagePathForward: state.listImagePathForward,
+      OneHoldStarboardState(
+        tableMapStarboard: state.tableMapStarboard,
+        listImagePathStarboard: state.listImagePathStarboard,
         valueList: [],
         value: '',
       ),
@@ -113,9 +115,9 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
 
   void resetState() {
     emit(
-      OneHoldForwardState(
-        tableMapForward: state.tableMapForward,
-        listImagePathForward: state.listImagePathForward,
+      OneHoldStarboardState(
+        tableMapStarboard: state.tableMapStarboard,
+        listImagePathStarboard: state.listImagePathStarboard,
         valueList: [],
         value: '',
       ),
@@ -125,11 +127,11 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
   Future addImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
-    state.listImagePathForward.add(image.path);
+    state.listImagePathStarboard.add(image.path);
     emit(
-      OneHoldForwardState(
-        tableMapForward: state.tableMapForward,
-        listImagePathForward: state.listImagePathForward,
+      OneHoldStarboardState(
+        tableMapStarboard: state.tableMapStarboard,
+        listImagePathStarboard: state.listImagePathStarboard,
         valueList: state.valueList,
         value: state.value,
       ),
@@ -137,11 +139,11 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
   }
 
   void deleteImage(int index) {
-    state.listImagePathForward.removeAt(index);
+    state.listImagePathStarboard.removeAt(index);
     emit(
-      OneHoldForwardState(
-        tableMapForward: state.tableMapForward,
-        listImagePathForward: state.listImagePathForward,
+      OneHoldStarboardState(
+        tableMapStarboard: state.tableMapStarboard,
+        listImagePathStarboard: state.listImagePathStarboard,
         valueList: state.valueList,
         value: state.value,
       ),

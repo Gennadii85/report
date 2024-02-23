@@ -1,0 +1,18 @@
+part of 'starboard_section_cubit.dart';
+
+class OneHoldStarboardState {
+  Map tableMapStarboard;
+  List<String> listImagePathStarboard;
+  String? name;
+  String? editValue;
+  List<String> valueList = [];
+  String value = '';
+  OneHoldStarboardState({
+    required this.tableMapStarboard,
+    required this.listImagePathStarboard,
+    required this.valueList,
+    required this.value,
+    this.name,
+    this.editValue,
+  });
+}
