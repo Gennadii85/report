@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/variables_weather_decks.dart';
-import '../widgets/drawer_navigation.dart';
+import '../widgets/all_section/drawer_navigation.dart';
 
 class WeatherDecks extends StatelessWidget {
   const WeatherDecks({

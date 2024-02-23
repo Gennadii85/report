@@ -3,12 +3,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/have_variables.dart';
 import '../../core/variables_accom_eng_cargo.dart';
-import '../widgets/app_bar_save_button.dart';
-import '../widgets/description_acc_eng_car.dart';
-import '../widgets/drawer_navigation.dart';
-import '../widgets/message_save.dart';
-import '../widgets/picker_list.dart';
-import '../widgets/title_text.dart';
+import '../widgets/all_section/app_bar_save_button.dart';
+import '../widgets/all_section/description_acc_eng_car.dart';
+import '../widgets/all_section/drawer_navigation.dart';
+import '../widgets/all_section/message_save.dart';
+import '../widgets/all_section/picker_list.dart';
+import '../widgets/all_section/title_text.dart';
 
 class CargoCompartments extends StatefulWidget {
   const CargoCompartments({super.key});

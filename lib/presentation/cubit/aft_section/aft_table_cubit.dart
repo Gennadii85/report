@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pdf_invoice_generator_flutter/core/variables_con_for_mid_aft.dart';
 import '../../../core/have_variables.dart';
-import '../../widgets/message_save.dart';
+import '../../widgets/all_section/message_save.dart';
 
 part 'aft_table_state.dart';
 

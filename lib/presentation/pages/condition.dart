@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdf_invoice_generator_flutter/core/have_variables.dart';
 import 'package:pdf_invoice_generator_flutter/core/variables_con_for_mid_aft.dart';
 import '../cubit/condition_section/title1_cubit.dart';
-import '../widgets/app_bar_save_button.dart';
-import '../widgets/description.dart';
-import '../widgets/drawer_navigation.dart';
-import '../widgets/title_text.dart';
+import '../widgets/all_section/app_bar_save_button.dart';
+import '../widgets/all_section/description.dart';
+import '../widgets/all_section/drawer_navigation.dart';
+import '../widgets/all_section/title_text.dart';
 
 class Condition extends StatefulWidget {
   const Condition({super.key, required this.titleAppBar});

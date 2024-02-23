@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../core/have_variables.dart';
-import '../pages/add_new_table_row.dart';
-import '../widgets/table_row_ui.dart';
+import '../../../core/have_variables.dart';
+import '../../pages/add_new_table_row.dart';
+import 'table_row_ui.dart';
 
 class TableSectionWatherdecks extends StatefulWidget {
   const TableSectionWatherdecks({

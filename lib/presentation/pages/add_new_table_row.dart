@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:pdf_invoice_generator_flutter/presentation/widgets/drawer_navigation.dart';
+import 'package:pdf_invoice_generator_flutter/presentation/widgets/all_section/drawer_navigation.dart';
 
 import '../../core/have_variables.dart';
 import '../cubit/add_new_table_row/add_new_table_row_cubit.dart';

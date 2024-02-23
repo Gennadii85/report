@@ -4,12 +4,12 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../core/have_variables.dart';
 import '../../core/variables_weather_decks.dart';
-import '../widgets/app_bar_save_button.dart';
-import '../widgets/drawer_navigation.dart';
-import '../widgets/message_save.dart';
-import '../widgets/picker_list.dart';
-import '../widgets/table_section_watherdecks.dart';
-import '../widgets/title_text.dart';
+import '../widgets/all_section/app_bar_save_button.dart';
+import '../widgets/all_section/drawer_navigation.dart';
+import '../widgets/all_section/message_save.dart';
+import '../widgets/all_section/picker_list.dart';
+import '../widgets/all_section/table_section_watherdecks.dart';
+import '../widgets/all_section/title_text.dart';
 
 class PoopDeck extends StatefulWidget {
   const PoopDeck({super.key});

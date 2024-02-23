@@ -5,9 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pdf_invoice_generator_flutter/core/variables_con_for_mid_aft.dart';
 import '../../core/have_variables.dart';
 import '../cubit/aft_section/aft_table_cubit.dart';
-import '../widgets/app_bar_save_button.dart';
-import '../widgets/drawer_navigation.dart';
-import '../widgets/picker_list.dart';
+import '../widgets/all_section/app_bar_save_button.dart';
+import '../widgets/all_section/drawer_navigation.dart';
+import '../widgets/all_section/picker_list.dart';
 
 class AftSection extends StatefulWidget {
   const AftSection({super.key, required this.titleAppBar});

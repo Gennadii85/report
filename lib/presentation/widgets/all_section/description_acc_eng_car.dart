@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import '../pages/add_new_table_row.dart';
+import '../../pages/add_new_table_row.dart';
 
 class DescriptionAccEngCar extends StatelessWidget {
   const DescriptionAccEngCar({

@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import '../widgets/picker_list.dart';
+import '../all_section/picker_list.dart';
 
 class HoldPickerList extends StatelessWidget {
   const HoldPickerList({

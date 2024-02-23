@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:pdf_invoice_generator_flutter/presentation/pages/all_holds.dart';
-import '../../data/model/holds_model.dart';
-import '../../data/repositories/holds_repositories.dart';
-import '../cubit/one_hold/forward_section/one_hold_forward_cubit.dart';
-import '../widgets/app_bar_save_button.dart';
+import '../../../data/model/holds_model.dart';
+import '../../../data/repositories/holds_repositories.dart';
+import '../../cubit/one_hold/forward_section/one_hold_forward_cubit.dart';
+import '../all_section/app_bar_save_button.dart';
 import 'hold_forward_section.dart';
 
 class OneHold extends StatelessWidget {
