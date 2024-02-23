@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pdf_invoice_generator_flutter/data/model/holds_model.dart';
 
 part 'one_hold_forward_state.dart';
@@ -8,6 +9,7 @@ part 'one_hold_forward_state.dart';
 class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
   final int indexHold;
   final HoldModel holdModel;
+  final ImagePicker _picker = ImagePicker();
 
   OneHoldForwardCubit(
     this.indexHold,
@@ -116,6 +118,32 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
         listImagePathForward: state.listImagePathForward,
         valueList: [],
         value: '',
+      ),
+    );
+  }
+
+  Future addImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+    state.listImagePathForward.add(image.path);
+    emit(
+      OneHoldForwardState(
+        tableMapForward: state.tableMapForward,
+        listImagePathForward: state.listImagePathForward,
+        valueList: state.valueList,
+        value: state.value,
+      ),
+    );
+  }
+
+  void deleteImage(int index) {
+    state.listImagePathForward.removeAt(index);
+    emit(
+      OneHoldForwardState(
+        tableMapForward: state.tableMapForward,
+        listImagePathForward: state.listImagePathForward,
+        valueList: state.valueList,
+        value: state.value,
       ),
     );
   }

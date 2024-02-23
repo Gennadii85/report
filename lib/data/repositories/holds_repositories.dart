@@ -41,7 +41,7 @@ class HoldsRepositories {
     HoldModel nevHold = HoldModel(
       nameForward: forwardCubit.holdModel.nameForward,
       tableMapForward: forwardCubit.state.tableMapForward,
-      listImagePathForward: [],
+      listImagePathForward: forwardCubit.state.listImagePathForward,
       nameStarboard: forwardCubit.holdModel.nameStarboard,
       tableMapStarboard: {},
       listImagePathStarboard: [],

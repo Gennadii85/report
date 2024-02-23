@@ -2,9 +2,7 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:pdf_invoice_generator_flutter/core/variables_holds.dart';
-
 import '../cubit/one_hold/forward_section/one_hold_forward_cubit.dart';
 
 class AddNewTableRowHold extends StatelessWidget {
@@ -39,7 +37,6 @@ class AddNewTableRowHold extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Добавляем таблицу'),
         ),
-        // drawer: const DrawerNavigation(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -130,56 +127,8 @@ class AddNewTableRowHold extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.all(5.0),
                                     child: InkWell(
-                                      onDoubleTap: () => showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          final TextEditingController
-                                              controller =
-                                              TextEditingController(
-                                            text: state.value,
-                                          );
-                                          return AlertDialog(
-                                            content: SingleChildScrollView(
-                                              child: TextField(
-                                                controller: controller,
-                                                maxLines: 30,
-                                                onSubmitted: (value) =>
-                                                    controller.text = value,
-                                              ),
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                style: TextButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.blue.shade50,
-                                                ),
-                                                onPressed: () {
-                                                  updateEditValue(
-                                                      controller.text);
-                                                  // BlocProvider.of<AddNewTableRowCubit>(
-                                                  //   context,
-                                                  // ).updateEditValue(
-                                                  //   controller.text,
-                                                  // );
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('SAVE'),
-                                              ),
-                                              TextButton(
-                                                style: TextButton.styleFrom(
-                                                  backgroundColor:
-                                                      Colors.blue.shade50,
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('CANCEL'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                      // showRedactValue(context, state),
+                                      onDoubleTap: () =>
+                                          showRedactValue(context, state.value),
                                       child: Text(
                                         state.editValue ?? state.value,
                                       ),
@@ -206,7 +155,6 @@ class AddNewTableRowHold extends StatelessWidget {
                                   state.editValue ?? state.value,
                                   context,
                                 );
-
                                 goRoute(context);
                               } else {
                                 showDialog(
@@ -232,7 +180,6 @@ class AddNewTableRowHold extends StatelessWidget {
                             ),
                             onPressed: () {
                               resetState();
-
                               goRoute(context);
                             },
                             child: const Text('CANCEL'),
@@ -250,51 +197,48 @@ class AddNewTableRowHold extends StatelessWidget {
     );
   }
 
-  // Future<dynamic> showRedactValue(
-  //   BuildContext context,
-  //   OneHoldForwardState state,
-  // ) {
-  //   return showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       final TextEditingController controller = TextEditingController(
-  //         text: state.value,
-  //       );
-  //       return AlertDialog(
-  //         content: SingleChildScrollView(
-  //           child: TextField(
-  //             controller: controller,
-  //             maxLines: 30,
-  //             onSubmitted: (value) => controller.text = value,
-  //           ),
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //             style: TextButton.styleFrom(
-  //               backgroundColor: Colors.blue.shade50,
-  //             ),
-  //             onPressed: () {
-  //               BlocProvider.of<AddNewTableRowCubit>(
-  //                 context,
-  //               ).updateEditValue(
-  //                 controller.text,
-  //               );
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: const Text('SAVE'),
-  //           ),
-  //           TextButton(
-  //             style: TextButton.styleFrom(
-  //               backgroundColor: Colors.blue.shade50,
-  //             ),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: const Text('CANCEL'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
+  Future<dynamic> showRedactValue(
+    BuildContext context,
+    initValue,
+  ) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        final TextEditingController controller = TextEditingController(
+          text: initValue,
+        );
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: TextField(
+              controller: controller,
+              maxLines: 30,
+              onSubmitted: (value) => controller.text = value,
+            ),
+          ),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue.shade50,
+              ),
+              onPressed: () {
+                updateEditValue(controller.text);
+
+                Navigator.of(context).pop();
+              },
+              child: const Text('SAVE'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue.shade50,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('CANCEL'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

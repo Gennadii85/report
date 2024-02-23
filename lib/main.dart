@@ -9,7 +9,6 @@ import 'presentation/cubit/condition_section/title1_cubit.dart';
 import 'presentation/cubit/description_acc_eng_car/description_acc_eng_car_cubit.dart';
 import 'presentation/cubit/forward_section/forward_table_cubit.dart';
 import 'presentation/cubit/middle_section/middle_table_cubit.dart';
-import 'presentation/cubit/one_hold/forward_section/one_hold_forward_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
