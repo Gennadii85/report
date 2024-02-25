@@ -13,18 +13,25 @@ class VarWeather {
     [
       'Plating',
       [
-        'Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched. Appropriate marking was applied.',
-        'The external shell plating was painted, but affected at some places by rust where paint cover was scratched or peel off.',
         'Deck plating was free from damage and well painted up. Appropriate marking was applied.',
+        'Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
       ],
     ],
     [
       'Hand railing',
-      ['444', '555', '666'],
+      [
+        'Free from damage and well painted up. Was generally noted in apparently structurally sound condition.',
+        'Not damaged, painted, but in some places the paint has scratched or peeled off.',
+        'The railing was bent at some places. Painted up.',
+        'The hand railing was well painted, few rails and stanchions were slightly bent/uneven.',
+      ],
     ],
     [
       'Deck fittings',
-      ['777', '888', '999'],
+      [
+        'Fittings on deck were damage free. Deck lines were situated along hatch coamings and between holds, were in satisfactory condition without any leakages.',
+        'Deck lines were situated along hatch coamings and between holds, were in good condition without any leakages and properly marked. The walking platforms above the pipelines were locally damaged / bent / partly unsafe.',
+      ],
     ],
   ];
 
@@ -32,25 +39,22 @@ class VarWeather {
     [
       'Plating',
       [
-        '111111 Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
-        '22222 Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
-        '333333 Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
-      ]
+        'Deck plating was free from damage and well painted up. Appropriate marking was applied.',
+        'Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
+      ],
     ],
     [
-      'Bulwark and Railing',
+      'Bulwark',
       [
-        '1111 The bulwark was well painted and noted in structurally sound condition.The railing were bent at the aft part in forecastle.',
-        '2222 The bulwark was well painted and noted in structurally sound condition.The railing were bent at the aft part in forecastle.',
-        '3333 The bulwark was well painted and noted in structurally sound condition.The railing were bent at the aft part in forecastle.',
+        'The railing was well painted up. Was generally noted in apparently structurally sound condition.',
+        'The bulwark was well painted and noted in structurally sound condition.',
+        'Not damaged, painted, but in some places the paint has peeled off.',
       ]
     ],
     [
       'Mooring arrangements',
       [
-        '1111 Mooring winches and equipment visually were in fair condition, well painted, apparently well maintained up, damage free.',
-        '2222 Mooring winches and equipment visually were in fair condition, well painted, apparently well maintained up, damage free.',
-        '3333 Mooring winches and equipment visually were in fair condition, well painted, apparently well maintained up, damage free.',
+        'Mooring winches and equipment visually were in satisfactory condition, good painted, apparently well maintained up, damage free.',
       ]
     ]
   ];
@@ -59,25 +63,24 @@ class VarWeather {
     [
       'Plating',
       [
-        '44444 Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched. Appropriate marking was applied.',
-        '55555 Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched. Appropriate marking was applied.',
-        '66666 Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched. Appropriate marking was applied.',
-      ]
+        'Deck plating was free from damage and well painted up. Appropriate marking was applied.',
+        'Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
+      ],
     ],
     [
       'Hand railing',
       [
-        '44444 The railing was bent at some places. Painted, but affected at some places by rust where paint cover was scratched.',
-        '55555 The railing was bent at some places. Painted, but affected at some places by rust where paint cover was scratched.',
-        '66666 The railing was bent at some places. Painted, but affected at some places by rust where paint cover was scratched.',
+        'Free from damage and well painted up. Was generally noted in apparently structurally sound condition.',
+        'Not damaged, painted, but in some places the paint has scratched or peeled off.',
+        'The railing was bent at some places. Painted up.',
+        'The hand railing was well painted, few rails and stanchions were slightly bent/uneven.',
       ]
     ],
     [
       'Deck fittings',
       [
-        '4444 Deck lines were situated along hatch coamings and between holds, were at some places by rust scale but without any leakages and properly marked.',
-        '5555 Deck lines were situated along hatch coamings and between holds, were at some places by rust scale but without any leakages and properly marked.',
-        '6666 Deck lines were situated along hatch coamings and between holds, were at some places by rust scale but without any leakages and properly marked.',
+        'Fittings on deck were damage free. Deck lines were situated along hatch coamings and between holds, were in satisfactory condition without any leakages.',
+        'Deck lines were situated along hatch coamings and between holds, were in good condition without any leakages and properly marked. The walking platforms above the pipelines were locally damaged / bent / partly unsafe.',
       ]
     ],
   ];
@@ -86,21 +89,21 @@ class VarWeather {
     [
       'Plating',
       [
-        'Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched. Appropriate marking was applied.',
-        'The external shell plating was painted, but affected at some places by rust where paint cover was scratched or peel off.',
         'Deck plating was free from damage and well painted up. Appropriate marking was applied.',
+        'Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
       ],
     ],
     [
-      'Hand railing',
-      ['444', '555', '666'],
+      'Bulwark',
+      [
+        'Free from damage and well painted up. Was generally noted in apparently structurally sound condition.',
+        'Not damaged, painted, but in some places the paint has scratched or peeled off.',
+      ],
     ],
     [
       'Mooring arrangements',
       [
-        '1111 Mooring winches and equipment visually were in fair condition, well painted, apparently well maintained up, damage free.',
-        '2222 Mooring winches and equipment visually were in fair condition, well painted, apparently well maintained up, damage free.',
-        '3333 Mooring winches and equipment visually were in fair condition, well painted, apparently well maintained up, damage free.',
+        'Mooring winches and equipment visually were in satisfactory condition, good painted, apparently well maintained up, damage free.',
       ]
     ]
   ];
