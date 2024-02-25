@@ -3,7 +3,10 @@ import 'package:pdf_invoice_generator_flutter/presentation/cubit/one_hold/starbo
 
 import '../../core/have_variables.dart';
 import '../../core/variables_holds.dart';
+import '../../presentation/cubit/one_hold/aft_section/aft_section_cubit.dart';
 import '../../presentation/cubit/one_hold/forward_section/forward_section_cubit.dart';
+import '../../presentation/cubit/one_hold/port_section/port_section_cubit.dart';
+import '../../presentation/cubit/one_hold/tank_section/tank_section_cubit.dart';
 import '../model/holds_model.dart';
 
 class HoldsRepositories {
@@ -37,10 +40,12 @@ class HoldsRepositories {
   }
 
   void saveHold(
-    int index,
-    OneHoldForwardCubit forwardCubit,
-    OneHoldStarboardCubit starboardCubit,
-  ) {
+      int index,
+      OneHoldForwardCubit forwardCubit,
+      OneHoldStarboardCubit starboardCubit,
+      OneHoldAftCubit aftCubit,
+      OneHoldPortCubit portCubit,
+      OneHoldTankCubit tankCubit) {
     List listHolds = Hive.box(VarHave.boxHolds).get(VarHave.holds);
     listHolds.removeAt(index);
     HoldModel nevHold = HoldModel(
@@ -51,14 +56,14 @@ class HoldsRepositories {
       tableMapStarboard: starboardCubit.state.tableMapStarboard,
       listImagePathStarboard: starboardCubit.state.listImagePathStarboard,
       nameAft: forwardCubit.holdModel.nameAft,
-      tableMapAft: {},
-      listImagePathAft: [],
+      tableMapAft: aftCubit.state.tableMapAft,
+      listImagePathAft: aftCubit.state.listImagePathAft,
       namePort: forwardCubit.holdModel.namePort,
-      tableMapPort: {},
-      listImagePathPort: [],
+      tableMapPort: portCubit.state.tableMapPort,
+      listImagePathPort: portCubit.state.listImagePathPort,
       nameTank: forwardCubit.holdModel.nameTank,
-      tableMapTank: {},
-      listImagePathTank: [],
+      tableMapTank: tankCubit.state.tableMapTank,
+      listImagePathTank: tankCubit.state.listImagePathTank,
     );
     listHolds.insert(index, nevHold);
     Hive.box(VarHave.boxHolds).put(VarHave.holds, listHolds);

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/model/holds_model.dart';
-import '../../cubit/one_hold/starboard_section/starboard_section_cubit.dart';
+import '../../cubit/one_hold/aft_section/aft_section_cubit.dart';
 import '../all_section/table_row_ui.dart';
 import 'add_new_table_row_hold.dart';
 import 'hold_image_picker.dart';
 import 'one_hold.dart';
 
-//! Starboard transverse bulkhead
+//! Aft transverse bulkhead
 
-class HoldStarboardSection extends StatelessWidget {
-  const HoldStarboardSection({
+class HoldAftSection extends StatelessWidget {
+  const HoldAftSection({
     super.key,
     required this.holdModel,
     required this.holdIndex,
@@ -21,13 +21,12 @@ class HoldStarboardSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OneHoldStarboardCubit cubit =
-        BlocProvider.of<OneHoldStarboardCubit>(context);
-    return BlocBuilder<OneHoldStarboardCubit, OneHoldStarboardState>(
+    OneHoldAftCubit cubit = BlocProvider.of<OneHoldAftCubit>(context);
+    return BlocBuilder<OneHoldAftCubit, OneHoldAftState>(
       builder: (context, state) {
         List nameList = [];
         List valueList = [];
-        state.tableMapStarboard.forEach((key, value) {
+        state.tableMapAft.forEach((key, value) {
           nameList.add(key);
           valueList.add(value);
         });
@@ -38,19 +37,19 @@ class HoldStarboardSection extends StatelessWidget {
               //! Table
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(holdModel.nameStarboard),
+                child: Text(holdModel.nameAft),
               ),
               const SizedBox(height: 20),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: state.tableMapStarboard.length,
+                itemCount: state.tableMapAft.length,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: ((context, index) {
                   return TableRowUI(
                     name: nameList[index],
                     value: valueList[index],
                     delete: (name) {
-                      BlocProvider.of<OneHoldStarboardCubit>(context)
+                      BlocProvider.of<OneHoldAftCubit>(context)
                           .deleteTableRow(name);
                     },
                   );
@@ -61,7 +60,7 @@ class HoldStarboardSection extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => AddNewTableRowStarboardHold(
+                      builder: (context) => AddNewTableRowAftHold(
                         route: MaterialPageRoute(
                           builder: (context) => OneHold(
                             holdIndex: holdIndex,
@@ -77,7 +76,7 @@ class HoldStarboardSection extends StatelessWidget {
               const SizedBox(height: 20),
               //! Image
               HoldPickerList(
-                imagesPath: state.listImagePathStarboard,
+                imagesPath: state.listImagePathAft,
                 deleteImage: (index) => cubit.deleteImage(index),
               ),
               const SizedBox(height: 20),

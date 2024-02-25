@@ -7,7 +7,10 @@ import 'package:pdf_invoice_generator_flutter/data/model/holds_model.dart';
 import 'package:pdf_invoice_generator_flutter/presentation/cubit/one_hold/starboard_section/starboard_section_cubit.dart';
 import 'package:pdf_invoice_generator_flutter/presentation/widgets/holds/one_hold.dart';
 import '../../data/repositories/holds_repositories.dart';
+import '../cubit/one_hold/aft_section/aft_section_cubit.dart';
 import '../cubit/one_hold/forward_section/forward_section_cubit.dart';
+import '../cubit/one_hold/port_section/port_section_cubit.dart';
+import '../cubit/one_hold/tank_section/tank_section_cubit.dart';
 import '../widgets/all_section/drawer_navigation.dart';
 
 class AllHolds extends StatefulWidget {
@@ -50,6 +53,18 @@ class _AllHoldsState extends State<AllHolds> {
                             BlocProvider(
                               create: (context) =>
                                   OneHoldStarboardCubit(index, holdModel),
+                            ),
+                            BlocProvider(
+                              create: (context) =>
+                                  OneHoldAftCubit(index, holdModel),
+                            ),
+                            BlocProvider(
+                              create: (context) =>
+                                  OneHoldPortCubit(index, holdModel),
+                            ),
+                            BlocProvider(
+                              create: (context) =>
+                                  OneHoldTankCubit(index, holdModel),
                             ),
                           ],
                           child: OneHold(

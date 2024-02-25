@@ -1,36 +1,21 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pdf_invoice_generator_flutter/core/variables_holds.dart';
+import '../../cubit/one_hold/aft_section/aft_section_cubit.dart';
 import '../../cubit/one_hold/forward_section/forward_section_cubit.dart';
+import '../../cubit/one_hold/port_section/port_section_cubit.dart';
+import '../../cubit/one_hold/starboard_section/starboard_section_cubit.dart';
+import '../../cubit/one_hold/tank_section/tank_section_cubit.dart';
+import 'abb_new_table_row_hold_body.dart';
 
-class AddNewTableRowHold extends StatelessWidget {
+class AddNewTableRowForwardHold extends StatelessWidget {
   final MaterialPageRoute route;
-  final Function(String value, List list) updateList;
-  final Function(String value) updateValue;
-  final Function(String textController) updateEditValue;
-  final Function(String name, String value, BuildContext context) saveTableRow;
-  final Function resetState;
-  const AddNewTableRowHold({
-    super.key,
-    required this.route,
-    required this.updateList,
-    required this.updateValue,
-    required this.updateEditValue,
-    required this.saveTableRow,
-    required this.resetState,
-  });
+  const AddNewTableRowForwardHold({super.key, required this.route});
 
   void goRoute(context) => Navigator.of(context).push(route);
 
   @override
   Widget build(BuildContext context) {
-    final List<String> tableNameList = [];
-    List dataList = VarHolds.dataHoldsTable;
-    for (var element in dataList) {
-      tableNameList.add(element[0]);
-    }
+    OneHoldForwardCubit cubit = BlocProvider.of<OneHoldForwardCubit>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -40,153 +25,21 @@ class AddNewTableRowHold extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('Выберите нужные параметры и сохраните их !'),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Если нужно редактировать строку просто создайте ее заново и выберите нужное значение!',
-                ),
-              ),
+              const AddNewTableRowDescription(),
               const SizedBox(height: 50),
               BlocBuilder<OneHoldForwardCubit, OneHoldForwardState>(
                 builder: (context, state) {
-                  return Column(
-                    children: [
-                      Table(
-                        border: TableBorder.all(color: Colors.black),
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        columnWidths: const {
-                          0: FlexColumnWidth(1),
-                          1: FlexColumnWidth(3),
-                        },
-                        children: [
-                          TableRow(
-                            children: [
-                              Column(
-                                children: [
-                                  DropdownButton2<String>(
-                                    hint:
-                                        const Text('Выберите название строки!'),
-                                    isExpanded: true,
-                                    items: tableNameList
-                                        .map(
-                                          (elem) => DropdownMenuItem<String>(
-                                            value: elem,
-                                            child: Text(
-                                              elem,
-                                              softWrap: true,
-                                              style: const TextStyle(
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                        .toList(),
-                                    onChanged: (value) {
-                                      updateList(value!, dataList);
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(state.name ?? ''),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              Column(
-                                children: [
-                                  DropdownButton2<String>(
-                                    hint:
-                                        const Text('Выберите значение строки!'),
-                                    isExpanded: true,
-                                    items: state.valueList
-                                        .map(
-                                          (elem) => DropdownMenuItem<String>(
-                                            value: elem,
-                                            child: Text(
-                                              elem,
-                                              softWrap: true,
-                                              style: const TextStyle(
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                        .toList(),
-                                    onChanged: (value) {
-                                      updateValue(value!);
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: InkWell(
-                                      onDoubleTap: () =>
-                                          showRedactValue(context, state.value),
-                                      child: Text(
-                                        state.editValue ?? state.value,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 50),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.blue.shade50,
-                            ),
-                            onPressed: () {
-                              if (state.name != null) {
-                                saveTableRow(
-                                  state.name!,
-                                  state.editValue ?? state.value,
-                                  context,
-                                );
-                                goRoute(context);
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Сохранять пока нечего'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(),
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            },
-                            child: const Text('SAVE'),
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: Colors.blue.shade50,
-                            ),
-                            onPressed: () {
-                              resetState();
-                              goRoute(context);
-                            },
-                            child: const Text('CANCEL'),
-                          ),
-                        ],
-                      ),
-                    ],
+                  return AddNewTableRowHoldBody(
+                    route: route,
+                    updateList: cubit.updateList,
+                    updateValue: cubit.updateValue,
+                    updateEditValue: cubit.updateEditValue,
+                    saveTableRow: cubit.saveTableRow,
+                    resetState: cubit.resetState,
+                    name: state.name,
+                    value: state.value,
+                    valueList: state.valueList,
+                    editValue: state.editValue,
                   );
                 },
               ),
@@ -196,49 +49,205 @@ class AddNewTableRowHold extends StatelessWidget {
       ),
     );
   }
+}
 
-  Future<dynamic> showRedactValue(
-    BuildContext context,
-    initValue,
-  ) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        final TextEditingController controller = TextEditingController(
-          text: initValue,
-        );
-        return AlertDialog(
-          content: SingleChildScrollView(
-            child: TextField(
-              controller: controller,
-              maxLines: 30,
-              onSubmitted: (value) => controller.text = value,
-            ),
+class AddNewTableRowStarboardHold extends StatelessWidget {
+  final MaterialPageRoute route;
+  const AddNewTableRowStarboardHold({super.key, required this.route});
+
+  void goRoute(context) => Navigator.of(context).push(route);
+
+  @override
+  Widget build(BuildContext context) {
+    OneHoldStarboardCubit cubit =
+        BlocProvider.of<OneHoldStarboardCubit>(context);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Добавляем таблицу'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const AddNewTableRowDescription(),
+              const SizedBox(height: 50),
+              BlocBuilder<OneHoldStarboardCubit, OneHoldStarboardState>(
+                builder: (context, state) {
+                  return AddNewTableRowHoldBody(
+                    route: route,
+                    updateList: cubit.updateList,
+                    updateValue: cubit.updateValue,
+                    updateEditValue: cubit.updateEditValue,
+                    saveTableRow: cubit.saveTableRow,
+                    resetState: cubit.resetState,
+                    name: state.name,
+                    value: state.value,
+                    valueList: state.valueList,
+                    editValue: state.editValue,
+                  );
+                },
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue.shade50,
-              ),
-              onPressed: () {
-                updateEditValue(controller.text);
+        ),
+      ),
+    );
+  }
+}
 
-                Navigator.of(context).pop();
-              },
-              child: const Text('SAVE'),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue.shade50,
+class AddNewTableRowAftHold extends StatelessWidget {
+  final MaterialPageRoute route;
+  const AddNewTableRowAftHold({super.key, required this.route});
+
+  void goRoute(context) => Navigator.of(context).push(route);
+
+  @override
+  Widget build(BuildContext context) {
+    OneHoldAftCubit cubit = BlocProvider.of<OneHoldAftCubit>(context);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Добавляем таблицу'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const AddNewTableRowDescription(),
+              const SizedBox(height: 50),
+              BlocBuilder<OneHoldAftCubit, OneHoldAftState>(
+                builder: (context, state) {
+                  return AddNewTableRowHoldBody(
+                    route: route,
+                    updateList: cubit.updateList,
+                    updateValue: cubit.updateValue,
+                    updateEditValue: cubit.updateEditValue,
+                    saveTableRow: cubit.saveTableRow,
+                    resetState: cubit.resetState,
+                    name: state.name,
+                    value: state.value,
+                    valueList: state.valueList,
+                    editValue: state.editValue,
+                  );
+                },
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('CANCEL'),
-            ),
-          ],
-        );
-      },
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddNewTableRowPortHold extends StatelessWidget {
+  final MaterialPageRoute route;
+  const AddNewTableRowPortHold({super.key, required this.route});
+
+  void goRoute(context) => Navigator.of(context).push(route);
+
+  @override
+  Widget build(BuildContext context) {
+    OneHoldPortCubit cubit = BlocProvider.of<OneHoldPortCubit>(context);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Добавляем таблицу'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const AddNewTableRowDescription(),
+              const SizedBox(height: 50),
+              BlocBuilder<OneHoldPortCubit, OneHoldPortState>(
+                builder: (context, state) {
+                  return AddNewTableRowHoldBody(
+                    route: route,
+                    updateList: cubit.updateList,
+                    updateValue: cubit.updateValue,
+                    updateEditValue: cubit.updateEditValue,
+                    saveTableRow: cubit.saveTableRow,
+                    resetState: cubit.resetState,
+                    name: state.name,
+                    value: state.value,
+                    valueList: state.valueList,
+                    editValue: state.editValue,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddNewTableRowTankHold extends StatelessWidget {
+  final MaterialPageRoute route;
+  const AddNewTableRowTankHold({super.key, required this.route});
+
+  void goRoute(context) => Navigator.of(context).push(route);
+
+  @override
+  Widget build(BuildContext context) {
+    OneHoldTankCubit cubit = BlocProvider.of<OneHoldTankCubit>(context);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Добавляем таблицу'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const AddNewTableRowDescription(),
+              const SizedBox(height: 50),
+              BlocBuilder<OneHoldTankCubit, OneHoldTankState>(
+                builder: (context, state) {
+                  return AddNewTableRowHoldBody(
+                    route: route,
+                    updateList: cubit.updateList,
+                    updateValue: cubit.updateValue,
+                    updateEditValue: cubit.updateEditValue,
+                    saveTableRow: cubit.saveTableRow,
+                    resetState: cubit.resetState,
+                    name: state.name,
+                    value: state.value,
+                    valueList: state.valueList,
+                    editValue: state.editValue,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AddNewTableRowDescription extends StatelessWidget {
+  const AddNewTableRowDescription({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text('Выберите нужные параметры и сохраните их !'),
+        ),
+        Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            'Если нужно редактировать строку просто создайте ее заново и выберите нужное значение!',
+          ),
+        ),
+      ],
     );
   }
 }

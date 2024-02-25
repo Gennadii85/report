@@ -24,6 +24,12 @@ class HoldForwardSection extends StatelessWidget {
     OneHoldForwardCubit cubit = BlocProvider.of<OneHoldForwardCubit>(context);
     return BlocBuilder<OneHoldForwardCubit, OneHoldForwardState>(
       builder: (context, state) {
+        List nameList = [];
+        List valueList = [];
+        state.tableMapForward.forEach((key, value) {
+          nameList.add(key);
+          valueList.add(value);
+        });
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -39,12 +45,6 @@ class HoldForwardSection extends StatelessWidget {
                 itemCount: state.tableMapForward.length,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: ((context, index) {
-                  List nameList = [];
-                  List valueList = [];
-                  state.tableMapForward.forEach((key, value) {
-                    nameList.add(key);
-                    valueList.add(value);
-                  });
                   return TableRowUI(
                     name: nameList[index],
                     value: valueList[index],
@@ -60,21 +60,13 @@ class HoldForwardSection extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => AddNewTableRowHold(
+                      builder: (context) => AddNewTableRowForwardHold(
                         route: MaterialPageRoute(
                           builder: (context) => OneHold(
                             holdIndex: holdIndex,
                             holdModel: holdModel,
                           ),
                         ),
-                        updateList: (value, dataList) =>
-                            cubit.updateList(value, dataList),
-                        updateValue: (value) => cubit.updateValue(value),
-                        saveTableRow: (name, value, context) =>
-                            cubit.saveTableRow(name, value, context),
-                        resetState: () => cubit.resetState(),
-                        updateEditValue: (textController) =>
-                            cubit.updateEditValue(textController),
                       ),
                     ),
                   );
