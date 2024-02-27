@@ -8,6 +8,7 @@ import '../widgets/all_section/description_acc_eng_car.dart';
 import '../widgets/all_section/drawer_navigation.dart';
 import '../widgets/all_section/message_save.dart';
 import '../widgets/all_section/picker_list.dart';
+import '../widgets/all_section/table_section_watherdecks.dart';
 import '../widgets/all_section/title_text.dart';
 
 class CargoCompartments extends StatefulWidget {
@@ -20,10 +21,8 @@ class CargoCompartments extends StatefulWidget {
 
 class _CargoCompartmentsState extends State<CargoCompartments> {
   final ImagePicker _picker = ImagePicker();
-  List<String> images =
-      Hive.box(VarHave.boxAccEngCar).get(VarHave.imageCargoCompartments) ?? [];
-  final Map maps =
-      Hive.box(VarHave.boxAccEngCar).get(VarHave.valueCargoCompartments) ?? {};
+  List<String> images = Hive.box(VarHave.boxAccEngCar).get(VarHave.image) ?? [];
+  final Map maps = Hive.box(VarHave.boxAccEngCar).get(VarHave.table) ?? {};
 
   Future getImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -31,13 +30,12 @@ class _CargoCompartmentsState extends State<CargoCompartments> {
     setState(() {
       List<String> save = images;
       save.add(image.path);
-      Hive.box(VarHave.boxAccEngCar).put(VarHave.imageCargoCompartments, save);
+      Hive.box(VarHave.boxAccEngCar).put(VarHave.image, save);
     });
   }
 
   Future checkSave(context) async {
-    final Map checkTableRow =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueCargoCompartments);
+    final Map checkTableRow = Hive.box(VarHave.boxAccEngCar).get(VarHave.table);
     if (checkTableRow.isNotEmpty) {
       Massage().saveMassage(context);
     } else {
@@ -66,18 +64,14 @@ class _CargoCompartmentsState extends State<CargoCompartments> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  const TitleText(
-                    title: VarAccEngCar.cargoCompartmentsTitle,
-                    textAlign: TextAlign.start,
-                  ),
-                  const SizedBox(height: 15),
-                  DescriptionAccEngCar(
+                  const SizedBox(height: 30),
+                  TableSectionWatherdecks(
+                    maps: maps,
                     boxName: VarHave.boxAccEngCar,
-                    dataList: VarAccEngCar.dataCargoCompartments,
                     route: MaterialPageRoute(
                       builder: (context) => const CargoCompartments(),
                     ),
-                    keyBoxValue: VarHave.valueCargoCompartments,
+                    dataList: VarAccEngCar.dataCargoCompartments,
                   ),
                   const SizedBox(height: 15),
                   images.isEmpty

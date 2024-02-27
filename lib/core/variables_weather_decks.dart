@@ -45,20 +45,24 @@ class VarWeather {
       [
         'Deck plating was free from damage and well painted up. Appropriate marking was applied.',
         'Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
+        'Appropriate marking missing.',
       ],
     ],
     [
       'Bulwark',
       [
-        'The railing was well painted up. Was generally noted in apparently structurally sound condition.',
-        'The bulwark was well painted and noted in structurally sound condition.',
-        'Not damaged, painted, but in some places the paint has peeled off.',
+        'The bulwark was found apparently in sound structural condition and well painted up.',
+        'Satisfactorily painted bulwark was found with following damages: _______________________',
       ]
     ],
     [
       'Mooring arrangements',
       [
-        'Mooring winches and equipment visually were in satisfactory condition, good painted, apparently well maintained up, damage free.',
+        'Windlasses, mooring winches and associated equipment visually were found to be in satisfactory condition and apparently well maintained up.',
+        'However, following deficiencies were noted:',
+        'Platforms and steps damaged/unsafe',
+        'Oil leaks from mooring equipment',
+        'Poor condition of mooring lines.',
       ]
     ]
   ];
@@ -74,17 +78,17 @@ class VarWeather {
     [
       'Hand railing',
       [
-        'Free from damage and well painted up. Was generally noted in apparently structurally sound condition.',
-        'Not damaged, painted, but in some places the paint has scratched or peeled off.',
-        'The railing was bent at some places. Painted up.',
-        'The hand railing was well painted, few rails and stanchions were slightly bent/uneven.',
+        'Structurally sound and damage free condition, apparently well painted up.',
+        'Structurally sound, but some areas of paint were scratched or peeled off.',
+        'The hand railing was well painted, a few rails and stanchions were slightly bent/uneven.',
+        'The railing was bent at some places with paint cover locally missing.',
       ]
     ],
     [
       'Deck fittings',
       [
-        'Fittings on deck were damage free. Deck lines were situated along hatch coamings and between holds, were in satisfactory condition without any leakages.',
-        'Deck lines were situated along hatch coamings and between holds, were in good condition without any leakages and properly marked. The walking platforms above the pipelines were locally damaged / bent / partly unsafe.',
+        'Fittings on deck were apparently in satisfactory condition and damage free. Deck lines situated along hatch coamings and between holds were in satisfactory condition and leakage free.',
+        'Deck lines situated along hatch coamings and between holds were in satisfactory condition and leakage free. The walking platforms above the pipelines were locally damaged / bent / partly unsafe.',
       ]
     ],
   ];
@@ -95,19 +99,24 @@ class VarWeather {
       [
         'Deck plating was free from damage and well painted up. Appropriate marking was applied.',
         'Deck plating was free from damage and was painted, but affected at some places by rust where paint cover was scratched.',
+        'Appropriate marking missing.',
       ],
     ],
     [
       'Bulwark',
       [
-        'Free from damage and well painted up. Was generally noted in apparently structurally sound condition.',
-        'Not damaged, painted, but in some places the paint has scratched or peeled off.',
+        'The bulwark was found apparently in sound structural condition and well painted up.',
+        'Satisfactorily painted bulwark was found with following damages: ____________________',
       ],
     ],
     [
       'Mooring arrangements',
       [
-        'Mooring winches and equipment visually were in satisfactory condition, good painted, apparently well maintained up, damage free.',
+        'Windlasses, mooring winches and associated equipment visually were found to be in satisfactory condition and apparently well maintained up.',
+        'However, following deficiencies were noted:',
+        'Platforms and steps damaged/unsafe',
+        'Oil leaks from mooring equipment',
+        'Poor condition of mooring lines.',
       ]
     ]
   ];

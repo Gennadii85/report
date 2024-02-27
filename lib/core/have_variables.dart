@@ -3,7 +3,7 @@ class VarHave {
   static const String image = 'image';
   //! везде ключ для таблиц
   static const String table = 'table';
-  //! ключ для json строки в boxHolds
+  //! ключ в boxHolds
   static const String holds = 'holds';
   //! имена боксов по секциям
   static const String boxForwardSection = 'Forward Section';

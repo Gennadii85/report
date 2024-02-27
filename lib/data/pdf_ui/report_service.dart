@@ -40,21 +40,21 @@ class PdfInvoiceService {
     //! Condition
     var condition = Hive.box(VarHave.boxCondition);
     //! Forward Section
-    var forwardSection = Hive.box(VarHave.boxForwardSection);
-    final Map forwardSectionMap = forwardSection.get(VarHave.table) ?? {};
-    final List<String> forwardImages = forwardSection.get('image') ?? [];
+    var boxForwardSection = Hive.box(VarHave.boxForwardSection);
+    final Map forwardSectionMap = boxForwardSection.get(VarHave.table) ?? {};
+    final List<String> forwardImages = boxForwardSection.get('image') ?? [];
     final List<Uint8List> forwardPages = await getImageList(forwardImages);
 
     //! Middle Section
-    var middleSection = Hive.box(VarHave.boxMiddleSection);
-    final Map middleSectionMap = middleSection.get(VarHave.table) ?? {};
-    final List<String> middleImages = middleSection.get('image') ?? [];
+    var boxMiddleSection = Hive.box(VarHave.boxMiddleSection);
+    final Map middleSectionMap = boxMiddleSection.get(VarHave.table) ?? {};
+    final List<String> middleImages = boxMiddleSection.get('image') ?? [];
     final List<Uint8List> middlePages = await getImageList(middleImages);
 
     //! Aft Section
-    var aftSection = Hive.box(VarHave.boxAftSection);
-    final Map aftSectionMap = aftSection.get(VarHave.table) ?? {};
-    final List<String> aftImages = aftSection.get('image') ?? [];
+    var boxAftSection = Hive.box(VarHave.boxAftSection);
+    final Map aftSectionMap = boxAftSection.get(VarHave.table) ?? {};
+    final List<String> aftImages = boxAftSection.get('image') ?? [];
     final List<Uint8List> aftPages = await getImageList(aftImages);
 
     //! Port Side
@@ -116,18 +116,15 @@ class PdfInvoiceService {
 
     //! CARGO COMPARTMENTS
     final Map cargoCompartmentsMap =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueCargoCompartments) ??
-            {};
-    String cargoCompartmentsValue = '';
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.table) ?? {};
+    String cargoCompartmentsTitle = '';
     if (cargoCompartmentsMap.isEmpty) {
-      cargoCompartmentsValue = '';
+      cargoCompartmentsTitle = '';
     } else {
-      cargoCompartmentsValue =
-          cargoCompartmentsMap.entries.first.value.toString();
+      cargoCompartmentsTitle = VarAccEngCar.cargoCompartmentsTitle;
     }
     final List<String> cargoCompartmentsImages =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.imageCargoCompartments) ??
-            [];
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.image) ?? [];
     final List<Uint8List> cargoCompartmentsPages =
         await getImageList(cargoCompartmentsImages);
 
@@ -143,7 +140,7 @@ class PdfInvoiceService {
             //!  Forward Section
             tableSectionForwardMiddleAftPDF(
               forwardSectionMap,
-              forwardSection,
+              boxForwardSection,
               hederStile,
               'Forward Section',
             ),
@@ -153,7 +150,7 @@ class PdfInvoiceService {
             //!  Middle Section
             tableSectionForwardMiddleAftPDF(
               middleSectionMap,
-              middleSection,
+              boxMiddleSection,
               hederStile,
               'Middle Section',
             ),
@@ -162,7 +159,7 @@ class PdfInvoiceService {
             //!  Aft Section
             tableSectionForwardMiddleAftPDF(
               aftSectionMap,
-              aftSection,
+              boxAftSection,
               hederStile,
               'Aft Section',
             ),
@@ -209,8 +206,8 @@ class PdfInvoiceService {
             imagesSectionPDF(engineRoomPages, pageTheme),
             sizedBox15(),
             //! CARGO COMPARTMENTS
-            varAccEngCarDescription(VarAccEngCar.cargoCompartmentsTitle,
-                hederStile, cargoCompartmentsValue),
+            weatherDecksTable(
+                cargoCompartmentsMap, hederStile, cargoCompartmentsTitle),
             imagesSectionPDF(cargoCompartmentsPages, pageTheme),
             sizedBox15(),
           ];
@@ -263,7 +260,7 @@ class PdfInvoiceService {
 
   Widget tableSectionForwardMiddleAftPDF(
     Map map,
-    forwardSection,
+    Box box,
     hederStile,
     String nameSection,
   ) {
@@ -299,7 +296,7 @@ class PdfInvoiceService {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              '${forwardSection.get('subTitle') ?? ''}$nameSection',
+              '${box.get('subTitle') ?? ''}$nameSection',
               style: hederStile,
             ),
           ],

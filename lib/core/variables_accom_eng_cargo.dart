@@ -11,7 +11,8 @@ class VarAccEngCar {
     [
       'Accommodation',
       [
-        'The accommodation including ladders, hand-railings, pipes and ceiling were found in good condition, painted and fitted for human habitation. The gangways on each side does not have visible mechanical damages, were structurally sound and painted, generally in good condition. All required marking were applied',
+        'The accommodation including ladders, hand-railings, pipes and ceiling were found in good condition, painted and fitted for human habitation.',
+        'The gangways on each side does not have visible mechanical damages, were structurally sound and painted, generally in good condition. Appropriate marking were applied.',
       ]
     ]
   ];
@@ -19,16 +20,31 @@ class VarAccEngCar {
     [
       'Engine Room',
       [
-        'The engine room and its machineries were found in good condition. No damaged or non-operative equipment were noted during the survey. Appropriate marking were applied.',
+        'The engine room and its machineries were found apparently in satisfactory condition. No damaged or non-operative equipment were noticed during the survey.',
+        'Oil leaks locally apparent.',
       ]
     ]
   ];
   static const List<List> dataCargoCompartments = [
     [
-      'Cargo Compartments',
+      'Cranes',
       [
-        'Holds internal construction is an open frame type bulk-carriers standard type. There were one vertical and one Combination ladders per hold, one was on the forward bulkhead and the other one was on the aft bulkhead. The cargo compartments were found clean, painted and affected with scratches and rust and dents in few places.  The tank top plating was fully affected with rust. Holds access ladders were found safe, but some of them were damaged to a various degree. Other metal constructions were found safe, but some of them were damaged to a various degree. All bilges were dry and clean at the moment of inspection. However many not sharp indentation were apparent at the different locations of plating.',
-      ]
-    ]
+        'Four cranes with SWL 30 mt each were found apparently in satisfactory condition, but not seen working. Their windows were found intact and reasonably clean. Steel structures of platforms were structurally sound and painted. Steel wire ropes were apparently in satisfactory condition.',
+        'Oil leaks inside of cranes pumps rooms were noted.',
+      ],
+    ],
+    [
+      'Marking',
+      [
+        'SWL marking on cranes was clearly marked with paint.',
+      ],
+    ],
+    [
+      'Grabs',
+      [
+        'Four grabs located nearby the cranes on special pedestals were found in fair condition.',
+        'No grabs fitted',
+      ],
+    ],
   ];
 }

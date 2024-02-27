@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pdf_invoice_generator_flutter/core/variables_con_for_mid_aft.dart';
 import '../../core/have_variables.dart';
-import '../cubit/middle_section/middle_table_cubit.dart';
 import '../widgets/all_section/app_bar_save_button.dart';
 import '../widgets/all_section/drawer_navigation.dart';
+import '../widgets/all_section/message_save.dart';
 import '../widgets/all_section/picker_list.dart';
+import '../widgets/all_section/table_section_watherdecks.dart';
 
 class MiddleSection extends StatefulWidget {
-  const MiddleSection({super.key, required this.titleAppBar});
-  final String titleAppBar;
+  const MiddleSection({super.key});
+  final String titleAppBar = 'Middle Section';
 
   @override
   State<MiddleSection> createState() => _MiddleSectionState();
@@ -20,8 +20,10 @@ class MiddleSection extends StatefulWidget {
 class _MiddleSectionState extends State<MiddleSection> {
   final ImagePicker _picker = ImagePicker();
   List<String> images = Hive.box(VarHave.boxMiddleSection).get('image') ?? [];
-  String dropdownValue = Hive.box(VarHave.boxForwardSection).get('subTitle') ??
-      VarForMidAft.subTitleListMiddle.first;
+  String dropdownValue = Hive.box(VarHave.boxMiddleSection).get('subTitle') ??
+      Hive.box(VarHave.boxForwardSection).get('subTitle') ??
+      VarForMidAft.subTitleListAft.first;
+  final Map maps = Hive.box(VarHave.boxMiddleSection).get(VarHave.table) ?? {};
 
   Future getImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -35,6 +37,16 @@ class _MiddleSectionState extends State<MiddleSection> {
     });
   }
 
+  Future checkSave(context) async {
+    final Map checkTableRow =
+        Hive.box(VarHave.boxMiddleSection).get(VarHave.table);
+    if (checkTableRow.isNotEmpty) {
+      Massage().saveMassage(context);
+    } else {
+      Massage().noSaveMassage(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,39 +56,43 @@ class _MiddleSectionState extends State<MiddleSection> {
           title: Text(widget.titleAppBar),
           actions: [
             AppBarSaveButton(
-              function: (context) {
-                BlocProvider.of<TableCubitMiddle>(context).saveMiddleSection(
-                  VarHave.boxMiddleSection,
-                  context,
-                  dropdownValue,
-                );
-              },
+              function: (context) => checkSave(context),
             ),
           ],
         ),
         drawer: const DrawerNavigation(),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 15),
-                subTitle(),
-                const SizedBox(height: 10),
-                const TableSectionMiddle(),
-                const SizedBox(height: 15),
-                images.isEmpty
-                    ? const Text('Здесь могут быть фото')
-                    : PickerList(
-                        images: images,
-                        boxName: VarHave.boxMiddleSection,
-                      ),
-                TextButton(
-                  onPressed: () => getImage(),
-                  child: const Text('Добавить фото'),
-                ),
-                const SizedBox(height: 30),
-              ],
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  const SizedBox(height: 15),
+                  subTitle(VarHave.boxMiddleSection),
+                  const SizedBox(height: 15),
+                  TableSectionWatherdecks(
+                    maps: maps,
+                    boxName: VarHave.boxMiddleSection,
+                    route: MaterialPageRoute(
+                      builder: (context) => const MiddleSection(),
+                    ),
+                    dataList: VarTableForMidAft.dataForMidAftSection,
+                  ),
+                  const SizedBox(height: 15),
+                  images.isEmpty
+                      ? const Text('Здесь могут быть фото')
+                      : PickerList(
+                          images: images,
+                          boxName: VarHave.boxMiddleSection,
+                        ),
+                  TextButton(
+                    onPressed: () => getImage(),
+                    child: const Text('Добавить фото'),
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
           ),
         ),
@@ -84,7 +100,7 @@ class _MiddleSectionState extends State<MiddleSection> {
     );
   }
 
-  Row subTitle() {
+  Row subTitle(String boxName) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -99,7 +115,8 @@ class _MiddleSectionState extends State<MiddleSection> {
           ),
           onChanged: (value) async {
             dropdownValue = value!;
-            // Hive.box(VarHave.boxMiddleSection).put('subTitle', value);
+            var box = await Hive.openBox(boxName);
+            box.put('subTitle', dropdownValue);
             setState(() {});
           },
           items: VarForMidAft.subTitleListMiddle
@@ -111,249 +128,6 @@ class _MiddleSectionState extends State<MiddleSection> {
           }).toList(),
         ),
       ],
-    );
-  }
-}
-
-class TableSectionMiddle extends StatelessWidget {
-  const TableSectionMiddle({super.key});
-  final String name1 = 'Coating:';
-  final String name2 = 'Plating structure:';
-  final String name3 = 'Draft marks:';
-
-  @override
-  Widget build(BuildContext context) {
-    final tableCubit = BlocProvider.of<TableCubitMiddle>(context);
-
-    return BlocBuilder<TableCubitMiddle, TableStateMiddle>(
-      builder: (context, state) {
-        return Table(
-          border: TableBorder.all(color: Colors.black),
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          columnWidths: const {
-            0: FlexColumnWidth(1),
-            1: FlexColumnWidth(3),
-          },
-          children: [
-            TableRow(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(name1),
-                ),
-                Column(
-                  children: [
-                    DropdownMenu<String>(
-                      initialSelection: state.param1,
-                      dropdownMenuEntries: VarTableForMidAft.coatingListItems,
-                      onSelected: (value) {
-                        state.param1 = value!;
-                        tableCubit.updateParameters(
-                          value,
-                          state.param2,
-                          state.param3,
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkWell(
-                        onDoubleTap: () => showDialog(
-                          context: context,
-                          builder: (context) {
-                            final TextEditingController controller =
-                                TextEditingController(text: state.param1);
-                            return AlertDialog(
-                              content: SingleChildScrollView(
-                                child: TextField(
-                                  controller: controller,
-                                  maxLines: 25,
-                                  onSubmitted: (value) =>
-                                      controller.text = value,
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: Colors.blue.shade50,
-                                  ),
-                                  onPressed: () {
-                                    tableCubit.updateParameters(
-                                      controller.text,
-                                      state.param2,
-                                      state.param3,
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('SAVE'),
-                                ),
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: Colors.blue.shade50,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('CANCEL'),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                        child: Text(state.param1),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            TableRow(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(name2),
-                ),
-                Column(
-                  children: [
-                    DropdownMenu<String>(
-                      initialSelection: state.param2,
-                      dropdownMenuEntries: VarTableForMidAft.platingListItems,
-                      onSelected: (value) {
-                        state.param2 = value!;
-                        tableCubit.updateParameters(
-                          state.param1,
-                          value,
-                          state.param3,
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkWell(
-                        onDoubleTap: () => showDialog(
-                          context: context,
-                          builder: (context) {
-                            final TextEditingController controller =
-                                TextEditingController(text: state.param2);
-                            return AlertDialog(
-                              content: SingleChildScrollView(
-                                child: TextField(
-                                  controller: controller,
-                                  maxLines: 30,
-                                  onSubmitted: (value) =>
-                                      controller.text = value,
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: Colors.blue.shade50,
-                                  ),
-                                  onPressed: () {
-                                    tableCubit.updateParameters(
-                                      state.param1,
-                                      controller.text,
-                                      state.param3,
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('SAVE'),
-                                ),
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: Colors.blue.shade50,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('CANCEL'),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                        child: Text(state.param2),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            TableRow(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(name3),
-                ),
-                Column(
-                  children: [
-                    DropdownMenu<String>(
-                      initialSelection: state.param3,
-                      dropdownMenuEntries: VarTableForMidAft.draftListItems,
-                      onSelected: (value) {
-                        state.param3 = value!;
-                        tableCubit.updateParameters(
-                          state.param1,
-                          state.param2,
-                          value,
-                        );
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: InkWell(
-                        onDoubleTap: () => showDialog(
-                          context: context,
-                          builder: (context) {
-                            final TextEditingController controller =
-                                TextEditingController(text: state.param3);
-                            return AlertDialog(
-                              content: SingleChildScrollView(
-                                child: TextField(
-                                  controller: controller,
-                                  maxLines: 30,
-                                  onSubmitted: (value) =>
-                                      controller.text = value,
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: Colors.blue.shade50,
-                                  ),
-                                  onPressed: () {
-                                    tableCubit.updateParameters(
-                                      state.param1,
-                                      state.param2,
-                                      controller.text,
-                                    );
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('SAVE'),
-                                ),
-                                TextButton(
-                                  style: TextButton.styleFrom(
-                                    backgroundColor: Colors.blue.shade50,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('CANCEL'),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                        child: Text(state.param3),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        );
-      },
     );
   }
 }

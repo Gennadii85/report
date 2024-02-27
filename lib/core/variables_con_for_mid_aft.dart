@@ -34,6 +34,41 @@ The external shell plating was affected with numerous of scratches and rust. Suc
 }
 
 class VarTableForMidAft {
+  static const List dataForMidAftSection = [
+    [
+      'Coating:',
+      [
+        'The external shell plating was good painted.',
+        'The external shell plating was painted, but affected at some places by rust where paint cover was scratched or peeled off.',
+        'The external shell plating was painted, but affected at some places by rust with scaling where paint cover was scratched.',
+        'The plating some places was affected with rusty patches and streaks.',
+        'Shell plating was noted good coated and revealed areas breakdown of coatings at the bulb area as result of fendering contact.',
+        'Typical chain scratches and rust were apparent at the bow.',
+        'It was presence of marine growth of fouling was visible on the hull.',
+        'Negligible black spots and abrasion caused by the previous contacts with the rubber fenders of piers and/or tugs were observed in places.',
+      ],
+    ],
+    [
+      'Plating structure:',
+      [
+        'The plating was found in good condition, without visible damage / structural members.',
+        'The plating was found in good condition. Only some minor indentation were visible on the hull.',
+        'The plating was seen slightly pressed in between the frames / structural members.',
+        'A few indentations apparent.',
+        'The plating was affected by indentation at 3 places (10 x 10 x 3 cm) above waterline.',
+        'The plating was affected by indentation at 3 places (10 x 10 x 3 cm) below waterline.',
+        'A few indentations apparent.',
+      ],
+    ],
+    [
+      'Draft marks:',
+      [
+        'Draft marks, both port and starboard sides, were well painted and clearly visible.',
+        'Draft marks, both port and starboard sides, were partly painted and visible.',
+      ],
+    ],
+  ];
+
   //? значения для InitialState Cubits для таблиц  Forward Section
   String? coatingForward = Hive.box(VarHave.boxForwardSection).get('coating');
   String? platingForward = Hive.box(VarHave.boxForwardSection).get('plating');
@@ -48,153 +83,4 @@ class VarTableForMidAft {
   String? coatingAft = Hive.box(VarHave.boxAftSection).get('coating');
   String? platingAft = Hive.box(VarHave.boxAftSection).get('plating');
   String? draftAft = Hive.box(VarHave.boxAftSection).get('draft');
-
-  //? значения для 'Starboard side – ****** Section' первая строка - 'coating'
-  static const String coatingParam1 = '''
-The external shell plating was good painted. 
-  ''';
-  static const String coatingParam2 = '''
-The external shell plating was painted, but affected at some places by rust where paint cover was scratched or peeled off. 
-  ''';
-  static const String coatingParam3 = '''
-The external shell plating was painted, but affected at some places by rust with scaling where paint cover was scratched. 
-  ''';
-  static const String coatingParam4 = '''
-The plating some places was affected with rusty patches and streaks.
-''';
-  static const String coatingParam5 = '''
-Shell plating was noted good coated and revealed areas breakdown of coatings at the bulb area as result of fendering contact.
-''';
-  static const String coatingParam6 = '''
-Typical chain scratches and rust were apparent at the bow.
-''';
-  static const String coatingParam7 = '''
-It was presence of marine growth of fouling was visible on the hull.
-''';
-  static const String coatingParam8 = '''
-Negligible black spots and abrasion caused by the previous contacts with the rubber fenders of piers and/or tugs were observed in places.
-''';
-  static const String coatingParam9 = '''
-The external shell plating was good painted. 
-
-The external shell plating was painted, but affected at some places by rust where paint cover was scratched or peeled off. 
-
-The external shell plating was painted, but affected at some places by rust with scaling where paint cover was scratched. 
-
-The plating some places was affected with rusty patches and streaks.
-
-Shell plating was noted good coated and revealed areas breakdown of coatings at the bulb area as result of fendering contact.
-
-Typical chain scratches and rust were apparent at the bow.
-
-It was presence of marine growth of fouling was visible on the hull.
-
-Negligible black spots and abrasion caused by the previous contacts with the rubber fenders of piers and/or tugs were observed in places.
-
-''';
-  static const List<String> coatingList = [
-    coatingParam1,
-    coatingParam2,
-    coatingParam3,
-    coatingParam4,
-    coatingParam5,
-    coatingParam6,
-    coatingParam7,
-    coatingParam8,
-    coatingParam9,
-  ];
-  static const List<DropdownMenuEntry<String>> coatingListItems = [
-    DropdownMenuEntry(value: coatingParam1, label: '1'),
-    DropdownMenuEntry(value: coatingParam2, label: '2'),
-    DropdownMenuEntry(value: coatingParam3, label: '3'),
-    DropdownMenuEntry(value: coatingParam4, label: '4'),
-    DropdownMenuEntry(value: coatingParam5, label: '5'),
-    DropdownMenuEntry(value: coatingParam6, label: '6'),
-    DropdownMenuEntry(value: coatingParam7, label: '7'),
-    DropdownMenuEntry(value: coatingParam8, label: '8'),
-    DropdownMenuEntry(value: coatingParam9, label: '9'),
-  ];
-  //? значения для 'Starboard side – ****** Section' вторая строка - 'plating'
-  static const String platingParam1 = '''
-The plating was found in good condition, without visible damage / structural members.
-  ''';
-  static const String platingParam2 = '''
-The plating was found in good condition. Only some minor indentation were visible on the hull.
-  ''';
-  static const String platingParam3 = '''
-The plating was seen slightly pressed in between the frames / structural members.
-  ''';
-  static const String platingParam4 = '''
-A few indentations apparent.
-  ''';
-  static const String platingParam5 = '''
-The plating was affected by indentation at 3 places (10 x 10 x 3 cm) above waterline.
-''';
-  static const String platingParam6 = '''
-The plating was affected by indentation at 3 places (10 x 10 x 3 cm) below waterline.
-''';
-  static const String platingParam7 = '''
-A few indentations apparent.
-''';
-  static const String platingParam8 = '''
-The plating was found in good condition, without visible damage / structural members.
-
-The plating was found in good condition. Only some minor indentation were visible on the hull.
-
-The plating was seen slightly pressed in between the frames / structural members.
-
-A few indentations apparent.
-
-The plating was affected by indentation at 3 places (10 x 10 x 3 cm) above waterline.
-
-The plating was affected by indentation at 3 places (10 x 10 x 3 cm) below waterline.
-
-A few indentations apparent.
-
-''';
-  static const List<String> platingList = [
-    platingParam1,
-    platingParam2,
-    platingParam3,
-    platingParam4,
-    platingParam5,
-    platingParam6,
-    platingParam7,
-    platingParam8,
-  ];
-  static const List<DropdownMenuEntry<String>> platingListItems = [
-    DropdownMenuEntry(value: platingParam1, label: '1'),
-    DropdownMenuEntry(value: platingParam2, label: '2'),
-    DropdownMenuEntry(value: platingParam3, label: '3'),
-    DropdownMenuEntry(value: platingParam4, label: '4'),
-    DropdownMenuEntry(value: platingParam5, label: '5'),
-    DropdownMenuEntry(value: platingParam6, label: '6'),
-    DropdownMenuEntry(value: platingParam7, label: '7'),
-    DropdownMenuEntry(value: platingParam8, label: '8'),
-  ];
-
-  //? значения для 'Starboard side – ****** Section' вторая строка - 'draft'
-  static const String draftParam1 = '''
-Draft marks, both port and starboard sides, were well painted and clearly visible.
-''';
-  static const String draftParam2 = '''
-Draft marks, both port and starboard sides, were partly painted and visible.
-  ''';
-  static const String draftParam3 = '''
-Draft marks, both port and starboard sides, were well painted and clearly visible.
-
-Draft marks, both port and starboard sides, were partly painted and visible.
-
-''';
-
-  static const List<String> draftList = [
-    draftParam1,
-    draftParam2,
-    draftParam3,
-  ];
-  static const List<DropdownMenuEntry<String>> draftListItems = [
-    DropdownMenuEntry(value: draftParam1, label: '1'),
-    DropdownMenuEntry(value: draftParam2, label: '2'),
-    DropdownMenuEntry(value: draftParam3, label: '3'),
-  ];
 }

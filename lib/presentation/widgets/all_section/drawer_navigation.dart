@@ -47,7 +47,7 @@ class DrawerNavigation extends StatelessWidget {
             text: 'Forward Section',
             function: (text) => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => ForwardSection(titleAppBar: text),
+                builder: (context) => const ForwardSection(),
               ),
             ),
           ),
@@ -55,7 +55,7 @@ class DrawerNavigation extends StatelessWidget {
             text: 'Middle Section',
             function: (text) => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => MiddleSection(titleAppBar: text),
+                builder: (context) => const MiddleSection(),
               ),
             ),
           ),
@@ -63,7 +63,7 @@ class DrawerNavigation extends StatelessWidget {
             text: 'Aft Section',
             function: (text) => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => AftSection(titleAppBar: text),
+                builder: (context) => const AftSection(),
               ),
             ),
           ),
