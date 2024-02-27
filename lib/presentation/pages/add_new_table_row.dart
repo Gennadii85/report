@@ -76,8 +76,6 @@ class AddNewTableRow extends StatelessWidget {
               const SizedBox(height: 15),
               BlocBuilder<AddNewTableRowCubit, AddNewTableRowState>(
                 builder: (context, state) {
-                  // List<Widget> ddd =
-                  //     state.finishValue?.map((e) => Text(e)).toList() ?? [];
                   return Column(
                     children: [
                       DropdownButton2<String>(

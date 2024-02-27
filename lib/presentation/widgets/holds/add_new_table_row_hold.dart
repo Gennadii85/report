@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/variables_holds.dart';
 import '../../cubit/one_hold/aft_section/aft_section_cubit.dart';
 import '../../cubit/one_hold/forward_section/forward_section_cubit.dart';
 import '../../cubit/one_hold/port_section/port_section_cubit.dart';
@@ -40,6 +41,7 @@ class AddNewTableRowForwardHold extends StatelessWidget {
                     value: state.value,
                     valueList: state.valueList,
                     editValue: state.editValue,
+                    dataList: VarHolds.dataHoldsTableForward,
                   );
                 },
               ),
@@ -85,6 +87,7 @@ class AddNewTableRowStarboardHold extends StatelessWidget {
                     value: state.value,
                     valueList: state.valueList,
                     editValue: state.editValue,
+                    dataList: VarHolds.dataHoldsTableStarboard,
                   );
                 },
               ),
@@ -129,6 +132,7 @@ class AddNewTableRowAftHold extends StatelessWidget {
                     value: state.value,
                     valueList: state.valueList,
                     editValue: state.editValue,
+                    dataList: VarHolds.dataHoldsTableAft,
                   );
                 },
               ),
@@ -173,6 +177,7 @@ class AddNewTableRowPortHold extends StatelessWidget {
                     value: state.value,
                     valueList: state.valueList,
                     editValue: state.editValue,
+                    dataList: VarHolds.dataHoldsTablePort,
                   );
                 },
               ),
@@ -217,6 +222,7 @@ class AddNewTableRowTankHold extends StatelessWidget {
                     value: state.value,
                     valueList: state.valueList,
                     editValue: state.editValue,
+                    dataList: VarHolds.dataHoldsTableTank,
                   );
                 },
               ),

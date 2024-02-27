@@ -1,8 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/variables_holds.dart';
 
 class AddNewTableRowHoldBody extends StatelessWidget {
   final MaterialPageRoute route;
@@ -15,6 +12,7 @@ class AddNewTableRowHoldBody extends StatelessWidget {
   final String value;
   final List valueList;
   final String? editValue;
+  final List dataList;
   const AddNewTableRowHoldBody({
     super.key,
     required this.route,
@@ -27,6 +25,7 @@ class AddNewTableRowHoldBody extends StatelessWidget {
     required this.value,
     required this.valueList,
     this.editValue,
+    required this.dataList,
   });
 
   void goRoute(context) => Navigator.of(context).push(route);
@@ -34,7 +33,6 @@ class AddNewTableRowHoldBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> tableNameList = [];
-    List dataList = VarHolds.dataHoldsTable;
     for (var element in dataList) {
       tableNameList.add(element[0]);
     }
