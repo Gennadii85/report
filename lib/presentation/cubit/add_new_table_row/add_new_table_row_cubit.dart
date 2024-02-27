@@ -21,18 +21,28 @@ class AddNewTableRowCubit extends Cubit<AddNewTableRowState> {
     emit(
       AddNewTableRowState(
         valueList: valueList,
-        value: valueList.first,
+        value: '',
         name: name,
       ),
     );
   }
 
-  void updateValue(value) {
+  void updateValue(int index) {
+    List<String> nevList = state.finishValue ?? [];
+    String value = '';
+    if (nevList.contains(state.valueList[index])) {
+      return;
+    } else {
+      nevList.add(state.valueList[index]);
+      value = nevList.join('\n \n');
+    }
+
     emit(
       AddNewTableRowState(
         valueList: state.valueList,
         value: value,
         name: state.name,
+        finishValue: nevList,
       ),
     );
   }
@@ -44,6 +54,7 @@ class AddNewTableRowCubit extends Cubit<AddNewTableRowState> {
         value: state.value,
         name: state.name,
         editValue: value,
+        finishValue: state.finishValue,
       ),
     );
   }
@@ -55,6 +66,7 @@ class AddNewTableRowCubit extends Cubit<AddNewTableRowState> {
         value: '',
         name: null,
         editValue: null,
+        finishValue: null,
       ),
     );
   }

@@ -6,9 +6,11 @@ class AddNewTableRowState {
     required this.value,
     this.name,
     this.editValue,
+    this.finishValue,
   });
   String? name;
   String? editValue;
   List<String> valueList = [];
   String value = '';
+  List<String>? finishValue;
 }

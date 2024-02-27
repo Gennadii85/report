@@ -21,8 +21,7 @@ class DescriptionAccEngCar extends StatelessWidget {
     final Map titleMap = Hive.box(boxName).get(keyBoxValue) ?? {};
     String title = '';
     if (titleMap.isEmpty) {
-      List titleList = dataList.first.last;
-      title = titleList.first.toString();
+      title = '';
     } else {
       title = titleMap.entries.first.value.toString();
     }

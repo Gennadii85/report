@@ -87,9 +87,14 @@ class PdfInvoiceService {
 
     //! ACCOMMODATION
     final Map accommodationMap =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueAccommodation);
-    final String accommodationValue =
-        accommodationMap.entries.first.value.toString();
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueAccommodation) ?? {};
+    String accommodationValue = '';
+
+    if (accommodationMap.isEmpty) {
+      accommodationValue = '';
+    } else {
+      accommodationValue = accommodationMap.entries.first.value.toString();
+    }
     final List<String> accommodationImages =
         Hive.box(VarHave.boxAccEngCar).get(VarHave.imageAccommodation) ?? [];
     final List<Uint8List> accommodationPages =
@@ -97,8 +102,13 @@ class PdfInvoiceService {
 
     //! ENGINE ROOM
     final Map engineRoomMap =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueEngineRoom);
-    final String engineRoomValue = engineRoomMap.entries.first.value.toString();
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueEngineRoom) ?? {};
+    String engineRoomValue = '';
+    if (engineRoomMap.isEmpty) {
+      engineRoomValue = '';
+    } else {
+      engineRoomValue = engineRoomMap.entries.first.value.toString();
+    }
     final List<String> engineRoomImages =
         Hive.box(VarHave.boxAccEngCar).get(VarHave.imageEngineRoom) ?? [];
     final List<Uint8List> engineRoomPages =
@@ -106,9 +116,15 @@ class PdfInvoiceService {
 
     //! CARGO COMPARTMENTS
     final Map cargoCompartmentsMap =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueCargoCompartments);
-    final String cargoCompartmentsValue =
-        cargoCompartmentsMap.entries.first.value.toString();
+        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueCargoCompartments) ??
+            {};
+    String cargoCompartmentsValue = '';
+    if (cargoCompartmentsMap.isEmpty) {
+      cargoCompartmentsValue = '';
+    } else {
+      cargoCompartmentsValue =
+          cargoCompartmentsMap.entries.first.value.toString();
+    }
     final List<String> cargoCompartmentsImages =
         Hive.box(VarHave.boxAccEngCar).get(VarHave.imageCargoCompartments) ??
             [];

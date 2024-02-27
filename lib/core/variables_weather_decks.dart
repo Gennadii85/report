@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 class VarWeather {
   static const titleStile =
       TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
+  static const addTableTitleStile =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.w600);
+  static const addTableValueStile =
+      TextStyle(fontSize: 15, fontWeight: FontWeight.w400);
   static const String portSideTitle = 'Port side, weather deck and fittings.';
   static const String forecastleDeckTitle = 'Forecastle deck and fittings.';
   static const String starboardSideTitle =

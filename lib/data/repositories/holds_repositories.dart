@@ -40,12 +40,13 @@ class HoldsRepositories {
   }
 
   void saveHold(
-      int index,
-      OneHoldForwardCubit forwardCubit,
-      OneHoldStarboardCubit starboardCubit,
-      OneHoldAftCubit aftCubit,
-      OneHoldPortCubit portCubit,
-      OneHoldTankCubit tankCubit) {
+    int index,
+    OneHoldForwardCubit forwardCubit,
+    OneHoldStarboardCubit starboardCubit,
+    OneHoldAftCubit aftCubit,
+    OneHoldPortCubit portCubit,
+    OneHoldTankCubit tankCubit,
+  ) {
     List listHolds = Hive.box(VarHave.boxHolds).get(VarHave.holds);
     listHolds.removeAt(index);
     HoldModel nevHold = HoldModel(

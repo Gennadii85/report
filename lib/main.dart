@@ -6,7 +6,6 @@ import 'package:pdf_invoice_generator_flutter/presentation/pages/home_page.dart'
 import 'presentation/cubit/add_new_table_row/add_new_table_row_cubit.dart';
 import 'presentation/cubit/aft_section/aft_table_cubit.dart';
 import 'presentation/cubit/condition_section/title1_cubit.dart';
-import 'presentation/cubit/description_acc_eng_car/description_acc_eng_car_cubit.dart';
 import 'presentation/cubit/forward_section/forward_table_cubit.dart';
 import 'presentation/cubit/middle_section/middle_table_cubit.dart';
 
@@ -39,12 +38,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AddNewTableRowCubit(),
         ),
-        BlocProvider(
-          create: (context) => DescriptionAccEngCarCubit(),
-        ),
-        // BlocProvider(
-        //   create: (context) => OneHoldForwardCubit(indexHold),
-        // ),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
