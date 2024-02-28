@@ -40,12 +40,21 @@ class OneHoldAftCubit extends Cubit<OneHoldAftState> {
     );
   }
 
-  void updateValue(String value) {
+  void updateValue(int index) {
+    List<String> nevList = state.finishValue ?? [];
+    String value = '';
+    if (nevList.contains(state.valueList[index])) {
+      return;
+    } else {
+      nevList.add(state.valueList[index]);
+      value = nevList.join('\n \n');
+    }
     emit(
       OneHoldAftState(
         valueList: state.valueList,
         value: value,
         name: state.name,
+        finishValue: nevList,
         tableMapAft: state.tableMapAft,
         listImagePathAft: state.listImagePathAft,
       ),
@@ -59,6 +68,7 @@ class OneHoldAftCubit extends Cubit<OneHoldAftState> {
         value: state.value,
         name: state.name,
         editValue: value,
+        finishValue: state.finishValue,
         tableMapAft: state.tableMapAft,
         listImagePathAft: state.listImagePathAft,
       ),
@@ -117,6 +127,9 @@ class OneHoldAftCubit extends Cubit<OneHoldAftState> {
         listImagePathAft: state.listImagePathAft,
         valueList: [],
         value: '',
+        name: null,
+        editValue: null,
+        finishValue: null,
       ),
     );
   }

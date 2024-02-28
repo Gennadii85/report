@@ -41,12 +41,21 @@ class OneHoldPortCubit extends Cubit<OneHoldPortState> {
     );
   }
 
-  void updateValue(String value) {
+  void updateValue(int index) {
+    List<String> nevList = state.finishValue ?? [];
+    String value = '';
+    if (nevList.contains(state.valueList[index])) {
+      return;
+    } else {
+      nevList.add(state.valueList[index]);
+      value = nevList.join('\n \n');
+    }
     emit(
       OneHoldPortState(
         valueList: state.valueList,
         value: value,
         name: state.name,
+        finishValue: nevList,
         tableMapPort: state.tableMapPort,
         listImagePathPort: state.listImagePathPort,
       ),
@@ -60,6 +69,7 @@ class OneHoldPortCubit extends Cubit<OneHoldPortState> {
         value: state.value,
         name: state.name,
         editValue: value,
+        finishValue: state.finishValue,
         tableMapPort: state.tableMapPort,
         listImagePathPort: state.listImagePathPort,
       ),
@@ -118,6 +128,9 @@ class OneHoldPortCubit extends Cubit<OneHoldPortState> {
         listImagePathPort: state.listImagePathPort,
         valueList: [],
         value: '',
+        name: null,
+        editValue: null,
+        finishValue: null,
       ),
     );
   }

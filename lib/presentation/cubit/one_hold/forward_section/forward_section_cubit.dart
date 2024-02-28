@@ -32,7 +32,7 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
     emit(
       OneHoldForwardState(
         valueList: valueList,
-        value: valueList.first,
+        value: '',
         name: name,
         tableMapForward: state.tableMapForward,
         listImagePathForward: state.listImagePathForward,
@@ -40,12 +40,21 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
     );
   }
 
-  void updateValue(String value) {
+  void updateValue(int index) {
+    List<String> nevList = state.finishValue ?? [];
+    String value = '';
+    if (nevList.contains(state.valueList[index])) {
+      return;
+    } else {
+      nevList.add(state.valueList[index]);
+      value = nevList.join('\n \n');
+    }
     emit(
       OneHoldForwardState(
         valueList: state.valueList,
         value: value,
         name: state.name,
+        finishValue: nevList,
         tableMapForward: state.tableMapForward,
         listImagePathForward: state.listImagePathForward,
       ),
@@ -59,13 +68,14 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
         value: state.value,
         name: state.name,
         editValue: value,
+        finishValue: state.finishValue,
         tableMapForward: state.tableMapForward,
         listImagePathForward: state.listImagePathForward,
       ),
     );
   }
 
-  void saveTableRow(String name, String value, context) {
+  void saveTableRow(String name, String value, BuildContext context) {
     if (name.isNotEmpty || value.isNotEmpty) {
       if (state.tableMapForward.containsKey(name)) {
         state.tableMapForward.remove(name);
@@ -117,6 +127,9 @@ class OneHoldForwardCubit extends Cubit<OneHoldForwardState> {
         listImagePathForward: state.listImagePathForward,
         valueList: [],
         value: '',
+        name: null,
+        editValue: null,
+        finishValue: null,
       ),
     );
   }

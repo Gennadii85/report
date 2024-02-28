@@ -8,6 +8,7 @@ class OneHoldForwardState {
   String? editValue;
   List<String> valueList = [];
   String value = '';
+  List<String>? finishValue;
   OneHoldForwardState({
     required this.tableMapForward,
     required this.listImagePathForward,
@@ -15,5 +16,6 @@ class OneHoldForwardState {
     required this.value,
     this.name,
     this.editValue,
+    this.finishValue,
   });
 }

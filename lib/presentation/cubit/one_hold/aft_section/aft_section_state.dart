@@ -7,6 +7,8 @@ class OneHoldAftState {
   String? editValue;
   List<String> valueList = [];
   String value = '';
+  List<String>? finishValue;
+
   OneHoldAftState({
     required this.tableMapAft,
     required this.listImagePathAft,
@@ -14,5 +16,6 @@ class OneHoldAftState {
     required this.value,
     this.name,
     this.editValue,
+    this.finishValue,
   });
 }

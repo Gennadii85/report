@@ -41,12 +41,21 @@ class OneHoldTankCubit extends Cubit<OneHoldTankState> {
     );
   }
 
-  void updateValue(String value) {
+  void updateValue(int index) {
+    List<String> nevList = state.finishValue ?? [];
+    String value = '';
+    if (nevList.contains(state.valueList[index])) {
+      return;
+    } else {
+      nevList.add(state.valueList[index]);
+      value = nevList.join('\n \n');
+    }
     emit(
       OneHoldTankState(
         valueList: state.valueList,
         value: value,
         name: state.name,
+        finishValue: nevList,
         tableMapTank: state.tableMapTank,
         listImagePathTank: state.listImagePathTank,
       ),
@@ -60,6 +69,7 @@ class OneHoldTankCubit extends Cubit<OneHoldTankState> {
         value: state.value,
         name: state.name,
         editValue: value,
+        finishValue: state.finishValue,
         tableMapTank: state.tableMapTank,
         listImagePathTank: state.listImagePathTank,
       ),
@@ -118,6 +128,9 @@ class OneHoldTankCubit extends Cubit<OneHoldTankState> {
         listImagePathTank: state.listImagePathTank,
         valueList: [],
         value: '',
+        name: null,
+        editValue: null,
+        finishValue: null,
       ),
     );
   }

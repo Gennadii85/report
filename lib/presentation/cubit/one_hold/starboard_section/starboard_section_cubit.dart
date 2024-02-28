@@ -43,12 +43,21 @@ class OneHoldStarboardCubit extends Cubit<OneHoldStarboardState> {
     );
   }
 
-  void updateValue(String value) {
+  void updateValue(int index) {
+    List<String> nevList = state.finishValue ?? [];
+    String value = '';
+    if (nevList.contains(state.valueList[index])) {
+      return;
+    } else {
+      nevList.add(state.valueList[index]);
+      value = nevList.join('\n \n');
+    }
     emit(
       OneHoldStarboardState(
         valueList: state.valueList,
         value: value,
         name: state.name,
+        finishValue: nevList,
         tableMapStarboard: state.tableMapStarboard,
         listImagePathStarboard: state.listImagePathStarboard,
       ),
@@ -62,6 +71,7 @@ class OneHoldStarboardCubit extends Cubit<OneHoldStarboardState> {
         value: state.value,
         name: state.name,
         editValue: value,
+        finishValue: state.finishValue,
         tableMapStarboard: state.tableMapStarboard,
         listImagePathStarboard: state.listImagePathStarboard,
       ),
@@ -120,6 +130,9 @@ class OneHoldStarboardCubit extends Cubit<OneHoldStarboardState> {
         listImagePathStarboard: state.listImagePathStarboard,
         valueList: [],
         value: '',
+        name: null,
+        editValue: null,
+        finishValue: null,
       ),
     );
   }

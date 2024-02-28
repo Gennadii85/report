@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import '../../core/have_variables.dart';
+import 'package:pdf_invoice_generator_flutter/data/repositories/hive_repositories.dart';
 import '../../data/pdf_ui/report_service.dart';
 import '../widgets/all_section/drawer_navigation.dart';
 
@@ -13,35 +12,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PdfInvoiceService service = PdfInvoiceService();
-  Future openAllBox() async {
-    await Hive.openBox(VarHave.boxCondition);
-    await Hive.openBox(VarHave.boxForwardSection);
-    await Hive.openBox(VarHave.boxMiddleSection);
-    await Hive.openBox(VarHave.boxAftSection);
-    await Hive.openBox(VarHave.boxPortSide);
-    await Hive.openBox(VarHave.boxForecastleDeck);
-    await Hive.openBox(VarHave.boxStarboardSide);
-    await Hive.openBox(VarHave.boxPoopDeck);
-    await Hive.openBox(VarHave.boxAccEngCar);
-    await Hive.openBox(VarHave.boxHolds);
-  }
-
-  Future deleteAllBoxValue() async {
-    await Hive.box(VarHave.boxCondition).clear();
-    await Hive.box(VarHave.boxForwardSection).clear();
-    await Hive.box(VarHave.boxMiddleSection).clear();
-    await Hive.box(VarHave.boxAftSection).clear();
-    await Hive.box(VarHave.boxPortSide).clear();
-    await Hive.box(VarHave.boxForecastleDeck).clear();
-    await Hive.box(VarHave.boxStarboardSide).clear();
-    await Hive.box(VarHave.boxPoopDeck).clear();
-    await Hive.box(VarHave.boxAccEngCar).clear();
-    await Hive.box(VarHave.boxHolds).clear();
-  }
 
   @override
   Widget build(BuildContext context) {
-    openAllBox();
+    HiveRepositories().openAllBox();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hello Victor'),
@@ -59,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                     actions: [
                       TextButton(
                         onPressed: () {
-                          deleteAllBoxValue();
+                          HiveRepositories().deleteAllBoxValue();
                           setState(() {});
                           Navigator.of(context).pop();
                         },

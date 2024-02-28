@@ -7,6 +7,7 @@ class OneHoldTankState {
   String? editValue;
   List<String> valueList = [];
   String value = '';
+  List<String>? finishValue;
   OneHoldTankState({
     required this.tableMapTank,
     required this.listImagePathTank,
@@ -14,5 +15,6 @@ class OneHoldTankState {
     required this.value,
     this.name,
     this.editValue,
+    this.finishValue,
   });
 }
