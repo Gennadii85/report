@@ -1,4 +1,3 @@
-// ignore_for_file: require_trailing_commas
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -39,6 +38,8 @@ class PdfInvoiceService {
   Future<Uint8List> createReport() async {
     await getTemporaryDirectory(); //* это под Android и для IOS
     TextStyle hederStile = TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
+    Uint8List logo =
+        (await rootBundle.load('assets/logo.jpg')).buffer.asUint8List();
     //! Condition
     var condition = Hive.box(VarHave.boxCondition);
     //! Forward Section
@@ -139,6 +140,26 @@ class PdfInvoiceService {
       MultiPage(
         maxPages: 100,
         pageTheme: pageTheme,
+        footer: (context) => Row(
+          children: [
+            Spacer(),
+            Text('survey@fdi.ltd - your fair detective investigators'),
+            Spacer(),
+            Text(context.pageNumber.toString()),
+          ],
+        ),
+        header: (context) => Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image(MemoryImage(logo), width: 130, height: 35),
+                Text('MV AGNES ON-HIRE REPORT'),
+              ],
+            ),
+            sizedBox15(),
+          ],
+        ),
         build: (context) {
           return [
             conditionPDF(condition, hederStile),
@@ -183,37 +204,58 @@ class PdfInvoiceService {
             sizedBox15(),
             //! Port Side
             weatherDecksTable(
-                portSideMap, hederStile, VarWeather.portSideTitle),
+              portSideMap,
+              hederStile,
+              VarWeather.portSideTitle,
+            ),
             imagesSectionPDF(portSidePages, pageTheme),
             sizedBox15(),
             //! Forecastle Deck
             weatherDecksTable(
-                forecastleDeckMap, hederStile, VarWeather.forecastleDeckTitle),
+              forecastleDeckMap,
+              hederStile,
+              VarWeather.forecastleDeckTitle,
+            ),
             imagesSectionPDF(forecastleDeckPages, pageTheme),
             sizedBox15(),
             //! StarboardSide
             weatherDecksTable(
-                starboardSideMap, hederStile, VarWeather.starboardSideTitle),
+              starboardSideMap,
+              hederStile,
+              VarWeather.starboardSideTitle,
+            ),
             imagesSectionPDF(starboardSidePages, pageTheme),
             sizedBox15(),
             //! Poop Deck
             weatherDecksTable(
-                poopDeckMap, hederStile, VarWeather.poopDeckTitle),
+              poopDeckMap,
+              hederStile,
+              VarWeather.poopDeckTitle,
+            ),
             imagesSectionPDF(poopDeckPages, pageTheme),
             sizedBox15(),
             //! ACCOMMODATION
-            varAccEngCarDescription(VarAccEngCar.accommodationTitle, hederStile,
-                accommodationValue),
+            varAccEngCarDescription(
+              VarAccEngCar.accommodationTitle,
+              hederStile,
+              accommodationValue,
+            ),
             imagesSectionPDF(accommodationPages, pageTheme),
             sizedBox15(),
             //! ENGINE ROOM
             varAccEngCarDescription(
-                VarAccEngCar.engineRoomTitle, hederStile, engineRoomValue),
+              VarAccEngCar.engineRoomTitle,
+              hederStile,
+              engineRoomValue,
+            ),
             imagesSectionPDF(engineRoomPages, pageTheme),
             sizedBox15(),
             //! CARGO COMPARTMENTS
             weatherDecksTable(
-                cargoCompartmentsMap, hederStile, cargoCompartmentsTitle),
+              cargoCompartmentsMap,
+              hederStile,
+              cargoCompartmentsTitle,
+            ),
             imagesSectionPDF(cargoCompartmentsPages, pageTheme),
             sizedBox15(),
             //! HOLDS
@@ -285,6 +327,26 @@ class PdfInvoiceService {
         MultiPage(
           maxPages: 50,
           pageTheme: pageTheme,
+          footer: (context) => Row(
+            children: [
+              Spacer(),
+              Text('survey@fdi.ltd - your fair detective investigators'),
+              Spacer(),
+              Text(context.pageNumber.toString()),
+            ],
+          ),
+          header: (context) => Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image(MemoryImage(logo), width: 130, height: 35),
+                  Text('MV AGNES ON-HIRE REPORT'),
+                ],
+              ),
+              sizedBox15(),
+            ],
+          ),
           build: (context) {
             return listHolds;
           },
@@ -432,28 +494,35 @@ class PdfInvoiceService {
       tableList.add(oneTableRow);
     });
 
-    return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(title, style: hederStile),
-        ],
-      ),
-      SizedBox(height: 10),
-      ...tableList,
-    ]);
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(title, style: hederStile),
+          ],
+        ),
+        SizedBox(height: 10),
+        ...tableList,
+      ],
+    );
   }
 
   Widget varAccEngCarDescription(
-      String title, TextStyle hederStile, String value) {
-    return Column(children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [Text(title, style: hederStile)],
-      ),
-      SizedBox(height: 15),
-      Text(value)
-    ]);
+    String title,
+    TextStyle hederStile,
+    String value,
+  ) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [Text(title, style: hederStile)],
+        ),
+        SizedBox(height: 15),
+        Text(value),
+      ],
+    );
   }
 
   Widget holdName(int index, hederStile) {
