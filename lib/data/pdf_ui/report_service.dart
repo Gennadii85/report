@@ -1,5 +1,4 @@
 // ignore_for_file: require_trailing_commas
-
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -7,11 +6,14 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
+import 'package:pdf_invoice_generator_flutter/core/variables_holds.dart';
 import '../../core/have_variables.dart';
 import '../../core/variables_accom_eng_cargo.dart';
 import '../../core/variables_weather_decks.dart';
 
 class PdfInvoiceService {
+  PageTheme pageTheme = const PageTheme(pageFormat: PdfPageFormat.a4);
+
   Future<void> savePdfFile(String fileName, Uint8List byteList) async {
     final output = await getTemporaryDirectory(); //* это под Android и для IOS
     var filePath = "${output.path}/$fileName.pdf";
@@ -128,10 +130,14 @@ class PdfInvoiceService {
     final List<Uint8List> cargoCompartmentsPages =
         await getImageList(cargoCompartmentsImages);
 
+    //! HOLDS
+    final List allHolds = Hive.box(VarHave.boxHolds).get(VarHave.holds) ?? [];
+    List<Widget> listHolds = [];
+
     final pdf = Document();
-    const pageTheme = PageTheme(pageFormat: PdfPageFormat.a4);
     pdf.addPage(
       MultiPage(
+        maxPages: 100,
         pageTheme: pageTheme,
         build: (context) {
           return [
@@ -210,10 +216,83 @@ class PdfInvoiceService {
                 cargoCompartmentsMap, hederStile, cargoCompartmentsTitle),
             imagesSectionPDF(cargoCompartmentsPages, pageTheme),
             sizedBox15(),
+            //! HOLDS
+            ListView(children: listHolds),
           ];
         },
       ),
     );
+
+    for (var element in allHolds) {
+      int indexHold = allHolds.indexOf(element);
+      final List<Uint8List> forwardPagesHold =
+          await getImageList(element.listImagePathForward);
+      final List<Uint8List> starboardPagesHold =
+          await getImageList(element.listImagePathStarboard);
+      final List<Uint8List> aftPagesHold =
+          await getImageList(element.listImagePathAft);
+      final List<Uint8List> portPagesHold =
+          await getImageList(element.listImagePathPort);
+      final List<Uint8List> tankPagesHold =
+          await getImageList(element.listImagePathTank);
+      listHolds.addAll(
+        [
+          holdName(indexHold, hederStile),
+          sizedBox15(),
+          //Forward transverse bulkhead
+          weatherDecksTable(
+            element.tableMapForward,
+            hederStile,
+            VarHolds.forwardTransverseBulkheadTitle,
+          ),
+          imagesSectionPDF(forwardPagesHold, pageTheme),
+          sizedBox15(),
+          //Starboard ship’s side
+          weatherDecksTable(
+            element.tableMapStarboard,
+            hederStile,
+            VarHolds.starboardShipsSideTitle,
+          ),
+          imagesSectionPDF(starboardPagesHold, pageTheme),
+          sizedBox15(),
+          //Aft transverse bulkhead
+          weatherDecksTable(
+            element.tableMapAft,
+            hederStile,
+            VarHolds.aftTransverseBulkheadTitle,
+          ),
+          imagesSectionPDF(aftPagesHold, pageTheme),
+          sizedBox15(),
+          //Port ship’s side
+          weatherDecksTable(
+            element.tableMapPort,
+            hederStile,
+            VarHolds.portShipsSideTitle,
+          ),
+          imagesSectionPDF(portPagesHold, pageTheme),
+          sizedBox15(),
+          //Tank tops
+          weatherDecksTable(
+            element.tableMapTank,
+            hederStile,
+            VarHolds.tankTopsTitle,
+          ),
+          imagesSectionPDF(tankPagesHold, pageTheme),
+          sizedBox15(),
+        ],
+      );
+      pdf.addPage(
+        MultiPage(
+          maxPages: 50,
+          pageTheme: pageTheme,
+          build: (context) {
+            return listHolds;
+          },
+        ),
+      );
+      listHolds.clear();
+    }
+
     return pdf.save();
   }
 
@@ -360,7 +439,7 @@ class PdfInvoiceService {
           Text(title, style: hederStile),
         ],
       ),
-      SizedBox(height: 15),
+      SizedBox(height: 10),
       ...tableList,
     ]);
   }
@@ -375,5 +454,17 @@ class PdfInvoiceService {
       SizedBox(height: 15),
       Text(value)
     ]);
+  }
+
+  Widget holdName(int index, hederStile) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          'HOLD No. ${index + 1}',
+          style: hederStile,
+        ),
+      ],
+    );
   }
 }
