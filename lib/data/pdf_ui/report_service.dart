@@ -40,6 +40,8 @@ class PdfInvoiceService {
     TextStyle hederStile = TextStyle(fontSize: 12, fontWeight: FontWeight.bold);
     Uint8List logo =
         (await rootBundle.load('assets/logo.jpg')).buffer.asUint8List();
+    final String boatName =
+        Hive.box(VarHave.boxCondition).get(VarHave.boatName);
     //! Condition
     var condition = Hive.box(VarHave.boxCondition);
     //! Forward Section
@@ -154,7 +156,7 @@ class PdfInvoiceService {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image(MemoryImage(logo), width: 130, height: 35),
-                Text('MV AGNES ON-HIRE REPORT'),
+                Text('MV ${boatName.toUpperCase()} ON-HIRE REPORT'),
               ],
             ),
             sizedBox15(),
@@ -341,7 +343,7 @@ class PdfInvoiceService {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Image(MemoryImage(logo), width: 130, height: 35),
-                  Text('MV AGNES ON-HIRE REPORT'),
+                  Text('MV ${boatName.toUpperCase()} ON-HIRE REPORT'),
                 ],
               ),
               sizedBox15(),

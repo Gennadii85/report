@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pdf_invoice_generator_flutter/core/have_variables.dart';
 import 'package:pdf_invoice_generator_flutter/data/repositories/hive_repositories.dart';
 import '../../data/pdf_ui/report_service.dart';
 import '../widgets/all_section/drawer_navigation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final PdfInvoiceService service = PdfInvoiceService();
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +36,15 @@ class _HomePageState extends State<HomePage> {
                     actions: [
                       TextButton(
                         onPressed: () {
-                          HiveRepositories().deleteAllBoxValue();
+                          HiveRepositories().deleteAllBoxValue(controller.text);
+
+                          controller.clear();
                           setState(() {});
                           Navigator.of(context).pop();
+                          // print(Hive.box(VarHave.boxCondition)
+                          //     .get(VarHave.boatName));
                         },
-                        child: const Text('Удалить'),
+                        child: const Text('Создать'),
                       ),
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
@@ -45,10 +52,24 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                     title: const Text(
-                      'Будут удалены все данные о текущем проекте.',
+                      'Введите название судна',
                     ),
-                    content: const Text(
-                      'Если некоторые данные не очищены - перезагрузите приложение!',
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextField(
+                          controller: controller,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        const Text(
+                          'Будут удалены все данные о текущем проекте.',
+                        ),
+                      ],
                     ),
                   );
                 },

@@ -16,8 +16,8 @@ class HiveRepositories {
     await Hive.openBox(VarHave.boxHolds);
   }
 
-  Future deleteAllBoxValue() async {
-    await Hive.box(VarHave.boxCondition).clear();
+  Future deleteAllBoxValue(boatName) async {
+    Hive.box(VarHave.boxCondition).clear();
     await Hive.box(VarHave.boxForwardSection).clear();
     await Hive.box(VarHave.boxMiddleSection).clear();
     await Hive.box(VarHave.boxAftSection).clear();
@@ -27,5 +27,6 @@ class HiveRepositories {
     await Hive.box(VarHave.boxPoopDeck).clear();
     await Hive.box(VarHave.boxAccEngCar).clear();
     await Hive.box(VarHave.boxHolds).clear();
+    Hive.box(VarHave.boxCondition).put(VarHave.boatName, boatName);
   }
 }

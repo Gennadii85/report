@@ -1,4 +1,5 @@
 class VarHave {
+  static const String boatName = 'boatName';
   //! везде ключ для фото
   static const String image = 'image';
   //! везде ключ для таблиц
