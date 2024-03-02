@@ -13,6 +13,7 @@ import '../../pages/middle_section.dart';
 import '../../pages/poop_deck.dart';
 import '../../pages/port_side.dart';
 import '../../pages/starboard_side.dart';
+import '../../pages/vessels_weather_deck.dart';
 import '../../pages/weather_decks.dart';
 
 class DrawerNavigation extends StatelessWidget {
@@ -136,6 +137,14 @@ class DrawerNavigation extends StatelessWidget {
             function: (text) => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const AllHolds(),
+              ),
+            ),
+          ),
+          DrawerEntities(
+            text: 'VESSELS WEATHER DECK',
+            function: (text) => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const VesselsWeatherDeck(),
               ),
             ),
           ),

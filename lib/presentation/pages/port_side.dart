@@ -4,9 +4,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/have_variables.dart';
 import '../../core/variables_weather_decks.dart';
+import '../../data/repositories/hive_repositories.dart';
 import '../widgets/all_section/app_bar_save_button.dart';
 import '../widgets/all_section/drawer_navigation.dart';
-import '../widgets/all_section/message_save.dart';
 import '../widgets/all_section/picker_list.dart';
 import '../widgets/all_section/table_section_watherdecks.dart';
 import '../widgets/all_section/title_text.dart';
@@ -36,15 +36,6 @@ class _PortSideState extends State<PortSide> {
     });
   }
 
-  Future checkSave(context) async {
-    final Map checkTableRow = Hive.box(VarHave.boxPortSide).get(VarHave.table);
-    if (checkTableRow.isNotEmpty) {
-      Massage().saveMassage(context);
-    } else {
-      Massage().noSaveMassage(context);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,7 +45,11 @@ class _PortSideState extends State<PortSide> {
           title: Text(widget.titleAppBar),
           actions: [
             AppBarSaveButton(
-              function: (context) => checkSave(context),
+              function: (context) => HiveRepositories().checkSave(
+                context,
+                VarHave.boxPortSide,
+                VarHave.table,
+              ),
             ),
           ],
         ),

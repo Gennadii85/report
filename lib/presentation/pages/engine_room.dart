@@ -3,10 +3,10 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../core/have_variables.dart';
 import '../../core/variables_accom_eng_cargo.dart';
+import '../../data/repositories/hive_repositories.dart';
 import '../widgets/all_section/app_bar_save_button.dart';
 import '../widgets/all_section/description_acc_eng_car.dart';
 import '../widgets/all_section/drawer_navigation.dart';
-import '../widgets/all_section/message_save.dart';
 import '../widgets/all_section/picker_list.dart';
 import '../widgets/all_section/title_text.dart';
 
@@ -35,16 +35,6 @@ class _EngineRoomState extends State<EngineRoom> {
     });
   }
 
-  Future checkSave(context) async {
-    final Map checkTableRow =
-        Hive.box(VarHave.boxAccEngCar).get(VarHave.valueEngineRoom);
-    if (checkTableRow.isNotEmpty) {
-      Massage().saveMassage(context);
-    } else {
-      Massage().noSaveMassage(context);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,7 +44,11 @@ class _EngineRoomState extends State<EngineRoom> {
           title: Text(widget.titleAppBar),
           actions: [
             AppBarSaveButton(
-              function: (context) => checkSave(context),
+              function: (context) => HiveRepositories().checkSave(
+                context,
+                VarHave.boxAccEngCar,
+                VarHave.valueEngineRoom,
+              ),
             ),
           ],
         ),

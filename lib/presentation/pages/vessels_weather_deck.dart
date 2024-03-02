@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pdf_invoice_generator_flutter/core/variables_vessels.dart';
+import 'package:pdf_invoice_generator_flutter/data/repositories/hive_repositories.dart';
 
 import '../../core/have_variables.dart';
-import '../../core/variables_weather_decks.dart';
-import '../../data/repositories/hive_repositories.dart';
 import '../widgets/all_section/app_bar_save_button.dart';
+import '../widgets/all_section/description_acc_eng_car.dart';
 import '../widgets/all_section/drawer_navigation.dart';
 import '../widgets/all_section/picker_list.dart';
-import '../widgets/all_section/table_section_watherdecks.dart';
 import '../widgets/all_section/title_text.dart';
 
-class StarboardSide extends StatefulWidget {
-  const StarboardSide({super.key});
-  final String titleAppBar = 'Starboard side, weather deck and fittings.';
+class VesselsWeatherDeck extends StatefulWidget {
+  final String titleAppBar = 'THE VESSELS WEATHER DECK OPENINGS:';
+  const VesselsWeatherDeck({super.key});
 
   @override
-  State<StarboardSide> createState() => _StarboardSideState();
+  State<VesselsWeatherDeck> createState() => _VesselsWeatherDeckState();
 }
 
-class _StarboardSideState extends State<StarboardSide> {
+class _VesselsWeatherDeckState extends State<VesselsWeatherDeck> {
   final ImagePicker _picker = ImagePicker();
-  List<String> images = Hive.box(VarHave.boxStarboardSide).get('image') ?? [];
-  final Map maps = Hive.box(VarHave.boxStarboardSide).get(VarHave.table) ?? {};
+  List<String> images = Hive.box(VarHave.boxVessels).get(VarHave.image) ?? [];
+  final Map maps = Hive.box(VarHave.boxVessels).get(VarHave.table) ?? {};
 
   Future getImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
     setState(() {
-      // final imagePath = File(image.path);
-      // * сохраняем только путь к файлу по адресу: "галерея/папка/файл/путь"
       List<String> save = images;
       save.add(image.path);
-      Hive.box(VarHave.boxStarboardSide).put('image', save);
+      Hive.box(VarHave.boxVessels).put(VarHave.image, save);
     });
   }
 
@@ -47,8 +45,8 @@ class _StarboardSideState extends State<StarboardSide> {
             AppBarSaveButton(
               function: (context) => HiveRepositories().checkSave(
                 context,
-                VarHave.boxStarboardSide,
-                VarHave.table,
+                VarHave.boxVessels,
+                VarHave.valueVesselsWeatherDeck,
               ),
             ),
           ],
@@ -62,24 +60,24 @@ class _StarboardSideState extends State<StarboardSide> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   const TitleText(
-                    title: VarWeather.starboardSideTitle,
+                    title: VarVessels.vesselsTitle,
                     textAlign: TextAlign.start,
                   ),
                   const SizedBox(height: 15),
-                  TableSectionWatherdecks(
-                    maps: maps,
-                    boxName: VarHave.boxStarboardSide,
+                  DescriptionAccEngCar(
+                    boxName: VarHave.boxVessels,
+                    dataList: VarVessels.dataDescriptionVessels,
                     route: MaterialPageRoute(
-                      builder: (context) => const StarboardSide(),
+                      builder: (context) => const VesselsWeatherDeck(),
                     ),
-                    dataList: VarWeather.dataStarboardSide,
+                    keyBoxValue: VarHave.valueVesselsWeatherDeck,
                   ),
                   const SizedBox(height: 15),
                   images.isEmpty
                       ? const Text('Здесь могут быть фото')
                       : PickerList(
                           images: images,
-                          boxName: VarHave.boxStarboardSide,
+                          boxName: VarHave.boxVessels,
                         ),
                   TextButton(
                     onPressed: () => getImage(),

@@ -1,6 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../core/have_variables.dart';
+import '../../presentation/widgets/all_section/message_save.dart';
 
 class HiveRepositories {
   Future openAllBox() async {
@@ -14,6 +15,7 @@ class HiveRepositories {
     await Hive.openBox(VarHave.boxPoopDeck);
     await Hive.openBox(VarHave.boxAccEngCar);
     await Hive.openBox(VarHave.boxHolds);
+    await Hive.openBox(VarHave.boxVessels);
   }
 
   Future deleteAllBoxValue(boatName) async {
@@ -28,5 +30,15 @@ class HiveRepositories {
     await Hive.box(VarHave.boxAccEngCar).clear();
     await Hive.box(VarHave.boxHolds).clear();
     Hive.box(VarHave.boxCondition).put(VarHave.boatName, boatName);
+    await Hive.box(VarHave.boxVessels).clear();
+  }
+
+  Future checkSave(context, String boxName, String keyBox) async {
+    final Map checkTableRow = Hive.box(boxName).get(keyBox) ?? {};
+    if (checkTableRow.isNotEmpty) {
+      Massage().saveMassage(context);
+    } else {
+      Massage().noSaveMassage(context);
+    }
   }
 }

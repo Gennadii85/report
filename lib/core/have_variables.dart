@@ -17,6 +17,7 @@ class VarHave {
   static const String boxStarboardSide = 'Starboard Side';
   static const String boxPoopDeck = 'Poop Deck';
   static const String boxHolds = 'Holds';
+  static const String boxVessels = 'Vessels';
   //! box для трех секций (Accommodation, Engine Room, Cargo Compartments)
   static const String boxAccEngCar = 'AccEngCar ';
   //! ключ для Accommodation
@@ -28,4 +29,7 @@ class VarHave {
   //! ключ для Cargo Compartments
   static const String valueCargoCompartments = 'valueCargoCompartments';
   static const String imageCargoCompartments = 'imageCargoCompartments';
+  //! ключ для описания Vessels Weather Deck
+  static const String valueVesselsWeatherDeck = 'valueVesselsWeatherDeck';
+  static const String imageVesselsWeatherDeck = 'imageVesselsWeatherDeck';
 }
