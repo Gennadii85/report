@@ -9,6 +9,7 @@ import '../widgets/all_section/app_bar_save_button.dart';
 import '../widgets/all_section/description_acc_eng_car.dart';
 import '../widgets/all_section/drawer_navigation.dart';
 import '../widgets/all_section/picker_list.dart';
+import '../widgets/all_section/table_section_watherdecks.dart';
 import '../widgets/all_section/title_text.dart';
 
 class VesselsWeatherDeck extends StatefulWidget {
@@ -71,6 +72,15 @@ class _VesselsWeatherDeckState extends State<VesselsWeatherDeck> {
                       builder: (context) => const VesselsWeatherDeck(),
                     ),
                     keyBoxValue: VarHave.valueVesselsWeatherDeck,
+                  ),
+                  const SizedBox(height: 15),
+                  TableSectionWatherdecks(
+                    maps: maps,
+                    boxName: VarHave.boxVessels,
+                    route: MaterialPageRoute(
+                      builder: (context) => const VesselsWeatherDeck(),
+                    ),
+                    dataList: VarVessels.dataTableVessels,
                   ),
                   const SizedBox(height: 15),
                   images.isEmpty

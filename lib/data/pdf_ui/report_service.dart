@@ -8,6 +8,7 @@ import 'package:pdf/widgets.dart';
 import 'package:pdf_invoice_generator_flutter/core/variables_holds.dart';
 import '../../core/have_variables.dart';
 import '../../core/variables_accom_eng_cargo.dart';
+import '../../core/variables_vessels.dart';
 import '../../core/variables_weather_decks.dart';
 
 class PdfInvoiceService {
@@ -136,6 +137,22 @@ class PdfInvoiceService {
     //! HOLDS
     final List allHolds = Hive.box(VarHave.boxHolds).get(VarHave.holds) ?? [];
     List<Widget> listHolds = [];
+
+    //!VESSELS WEATHER DECK
+    final Map vesselsValueMap =
+        Hive.box(VarHave.boxVessels).get(VarHave.valueVesselsWeatherDeck) ?? {};
+    String vesselsValue = '';
+    if (vesselsValueMap.isEmpty) {
+      vesselsValue = '';
+    } else {
+      vesselsValue = vesselsValueMap.entries.first.value.toString();
+    }
+    var boxVessels = Hive.box(VarHave.boxVessels);
+    final Map vesselsMap = boxVessels.get(VarHave.table) ?? {};
+    final List<String> vesselsImages = boxVessels.get(VarHave.image) ?? [];
+    final List<Uint8List> vesselsPages = await getImageList(vesselsImages);
+    final String hatch = allHolds.length.toString();
+    final String vesselsTableTitle = 'HATCH COVERS 1-$hatch';
 
     final pdf = Document();
     pdf.addPage(
@@ -356,6 +373,49 @@ class PdfInvoiceService {
       );
       listHolds.clear();
     }
+    pdf.addPage(
+      MultiPage(
+        maxPages: 50,
+        pageTheme: pageTheme,
+        footer: (context) => Row(
+          children: [
+            Spacer(),
+            Text('survey@fdi.ltd - your fair detective investigators'),
+            Spacer(),
+            Text(context.pageNumber.toString()),
+          ],
+        ),
+        header: (context) => Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image(MemoryImage(logo), width: 130, height: 35),
+                Text('MV ${boatName.toUpperCase()} ON-HIRE REPORT'),
+              ],
+            ),
+            sizedBox15(),
+          ],
+        ),
+        build: (context) {
+          return [
+            varAccEngCarDescription(
+              VarVessels.vesselsTitle,
+              hederStile,
+              vesselsValue,
+            ),
+            sizedBox15(),
+            weatherDecksTable(
+              vesselsMap,
+              hederStile,
+              vesselsTableTitle,
+            ),
+            sizedBox15(),
+            imagesSectionPDF(vesselsPages, pageTheme),
+          ];
+        },
+      ),
+    );
 
     return pdf.save();
   }
